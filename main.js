@@ -135,21 +135,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (userAgent.includes('win') || platform.includes('win')) {
       return {
-        url: `${RELEASE_BASE}/Autoflow-vNext.Setup.${RELEASE_TAG}.exe`,
+        url: `${RELEASE_BASE}/Autoflow-vNext Setup ${RELEASE_TAG}.exe`,
         label: 'Download for Windows (.exe)',
         badge: 'Windows (x64)'
       };
     } else if (userAgent.includes('mac') || platform.includes('mac')) {
       return {
-        url: `${RELEASE_BASE}/Autoflow-vNext-${RELEASE_TAG}.dmg`,
+        url: `${RELEASE_BASE}/Autoflow-vNext-${RELEASE_TAG}-arm64.dmg`,
         label: 'Download for macOS (.dmg)',
         badge: 'macOS (Universal / arm64)'
       };
     } else if (userAgent.includes('linux') || platform.includes('linux')) {
       return {
-        url: `${RELEASE_BASE}/Autoflow-vNext-${RELEASE_TAG}.AppImage`,
-        label: 'Download for Linux (.AppImage)',
-        badge: 'Linux (x64)'
+        url: `${RELEASE_BASE}/autoflow-tech_${RELEASE_TAG}_amd64.deb`,
+        label: 'Download for Linux (.deb)',
+        badge: 'Linux (amd64)'
       };
     }
 
