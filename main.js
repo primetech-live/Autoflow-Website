@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const REPO_OWNER = 'primetech-live';
   const REPO_NAME = 'Autoflow-Release';
   const RELEASE_TAG = '1.1.2';
-  const RELEASE_BASE = `https://github.com/${REPO_OWNER}/${REPO_NAME}/releases/download/${RELEASE_TAG}`;
+  const RELEASE_BASE = `https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/main/release`;
 
   function getOsReleaseAsset() {
     const userAgent = navigator.userAgent.toLowerCase();
