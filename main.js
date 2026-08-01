@@ -126,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // 5. OS Detection & Direct GitHub Release Download Links
   const REPO_OWNER = 'primetech-live';
   const REPO_NAME = 'Autoflow-Release';
-  const RELEASE_TAG = '1.1.2';
+  const RELEASE_TAG = '1.0.0';
   const RELEASE_BASE = `https://github.com/${REPO_OWNER}/${REPO_NAME}/releases/download/${RELEASE_TAG}`;
 
   function getOsReleaseAsset() {
@@ -161,25 +161,38 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   }
 
+  // Get the OS-specific asset
   const osAsset = getOsReleaseAsset();
+  // Log the base URL for debugging
+  console.log('Release base URL:', RELEASE_BASE);
+  // Update download buttons (including CTA) to use OS-specific label
   const downloadBtns = document.querySelectorAll('.js-download-btn, a[href="#install"], a[href="#"]');
-
   downloadBtns.forEach(btn => {
-    if (btn.classList.contains('js-download-btn') || btn.textContent.trim().toLowerCase().includes('download') || btn.getAttribute('href') === '#install') {
+    if (btn.classList.contains('js-download-btn') ||
+        btn.textContent.trim().toLowerCase().includes('download') ||
+        btn.getAttribute('href') === '#install') {
       btn.href = osAsset.url;
       btn.setAttribute('target', '_blank');
       btn.setAttribute('rel', 'noopener noreferrer');
-      
-      if (btn.classList.contains('js-download-label')) {
-        btn.textContent = osAsset.label;
-      }
+      // Directly show OS name in the button text
+      btn.textContent = osAsset.label;
     }
   });
-
+  // Typing animation for the hero slogan
+  const sloganEl = document.querySelector('.hero-slogan');
+  if (sloganEl) {
+    const sloganText = 'Deploy with Precision.';
+    sloganEl.textContent = '';
+    let i = 0;
+    const interval = setInterval(() => {
+      sloganEl.textContent += sloganText.charAt(i);
+      i++;
+      if (i >= sloganText.length) clearInterval(interval);
+    }, 80);
+  }
   // Display OS badge if element exists
   const osBadgeEl = document.querySelector('.js-os-badge');
   if (osBadgeEl) {
     osBadgeEl.textContent = `Auto-detected: ${osAsset.badge}`;
   }
 });
-
