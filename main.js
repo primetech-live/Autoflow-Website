@@ -112,56 +112,77 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 5. OS Detection & Direct GitHub Release Download Links
+  // 5. OS Detection & Dynamic GitHub Release Download Links
   const REPO_OWNER = 'primetech-live';
   const REPO_NAME = 'Autoflow-Release';
-  const RELEASE_TAG = 'v1.0.0';
-  const RELEASE_BASE = `https://github.com/${REPO_OWNER}/${REPO_NAME}/releases/download/${RELEASE_TAG}`;
 
-  function getOsReleaseAsset() {
+  function updateDownloadLinks(tag, version) {
     const userAgent = navigator.userAgent.toLowerCase();
     const platform = navigator.platform ? navigator.platform.toLowerCase() : '';
+    const releaseBase = `https://github.com/${REPO_OWNER}/${REPO_NAME}/releases/download/${tag}`;
 
+    let osAsset;
     if (userAgent.includes('win') || platform.includes('win')) {
-      return {
-        url: `${RELEASE_BASE}/Autoflow-vNext.Setup.1.0.0.exe`,
+      osAsset = {
+        url: `${releaseBase}/Autoflow-vNext.Setup.${version}.exe`,
         label: 'DOWNLOAD FOR WINDOWS',
         badge: 'Windows (x64)'
       };
     } else if (userAgent.includes('mac') || platform.includes('mac')) {
-      return {
-        url: `${RELEASE_BASE}/Autoflow-vNext-1.0.0-arm64.dmg`,
+      osAsset = {
+        url: `${releaseBase}/Autoflow-vNext-${version}-arm64.dmg`,
         label: 'DOWNLOAD FOR MACOS',
         badge: 'macOS (Universal / arm64)'
       };
     } else if (userAgent.includes('linux') || platform.includes('linux')) {
-      return {
-        url: `${RELEASE_BASE}/autoflow-tech_1.0.0_amd64.deb`,
+      osAsset = {
+        url: `${releaseBase}/autoflow-tech_${version}_amd64.deb`,
         label: 'DOWNLOAD FOR LINUX',
         badge: 'Linux (amd64)'
       };
+    } else {
+      osAsset = {
+        url: `https://github.com/${REPO_OWNER}/${REPO_NAME}/releases/latest`,
+        label: 'DOWNLOAD LATEST RELEASE',
+        badge: 'Windows, macOS, Linux'
+      };
     }
 
-    // Default fallback
-    return {
-      url: `https://github.com/${REPO_OWNER}/${REPO_NAME}/releases/tag/${RELEASE_TAG}`,
-      label: 'DOWNLOAD LATEST RELEASE',
-      badge: 'Windows, macOS, Linux'
-    };
+    const downloadBtns = document.querySelectorAll('.js-download-btn');
+    downloadBtns.forEach(btn => {
+      const labelSpan = btn.querySelector('.js-download-label');
+      btn.href = osAsset.url;
+      btn.setAttribute('target', '_blank');
+      btn.setAttribute('rel', 'noopener noreferrer');
+      if (labelSpan) {
+        labelSpan.textContent = osAsset.label;
+      }
+    });
+
+    const osBadgeEl = document.querySelector('.js-os-badge');
+    if (osBadgeEl) {
+      osBadgeEl.textContent = `Auto-detected: ${osAsset.badge}`;
+    }
   }
 
-  const osAsset = getOsReleaseAsset();
-  // Update download buttons (preserve SVG icons)
-  const downloadBtns = document.querySelectorAll('.js-download-btn');
-  downloadBtns.forEach(btn => {
-    const labelSpan = btn.querySelector('.js-download-label');
-    btn.href = osAsset.url;
-    btn.setAttribute('target', '_blank');
-    btn.setAttribute('rel', 'noopener noreferrer');
-    if (labelSpan) {
-      labelSpan.textContent = osAsset.label;
-    }
-  });
+  // Initialize with fallback v1.0.0, then fetch latest release info dynamically
+  updateDownloadLinks('v1.0.0', '1.0.0');
+
+  fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/releases/latest`)
+    .then(response => {
+      if (!response.ok) throw new Error('Network response was not ok');
+      return response.json();
+    })
+    .then(data => {
+      if (data && data.tag_name) {
+        const tag = data.tag_name;
+        const version = tag.replace(/^v/, '');
+        updateDownloadLinks(tag, version);
+      }
+    })
+    .catch(err => {
+      console.warn('Could not fetch latest release info, using fallback v1.0.0:', err);
+    });
 
   const sloganEl = document.querySelector('.hero-slogan');
   if (sloganEl) {
@@ -173,11 +194,5 @@ document.addEventListener('DOMContentLoaded', () => {
       i++;
       if (i >= sloganText.length) clearInterval(interval);
     }, 80);
-  }
-
-  // Display OS badge if element exists
-  const osBadgeEl = document.querySelector('.js-os-badge');
-  if (osBadgeEl) {
-    osBadgeEl.textContent = `Auto-detected: ${osAsset.badge}`;
   }
 });
