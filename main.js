@@ -161,30 +161,30 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   }
 
-  // Get the OS-specific asset
-  const osAsset = getOsReleaseAsset();
-  // Log the base URL for debugging
-  console.log('Release base URL:', RELEASE_BASE);
-  // Update download buttons (including CTA) to use OS-specific label
-  const downloadBtns = document.querySelectorAll('.js-download-btn, a[href="#install"], a[href="#"]');
-  downloadBtns.forEach(btn => {
-    if (btn.classList.contains('js-download-btn') ||
-        btn.textContent.trim().toLowerCase().includes('download') ||
-        btn.getAttribute('href') === '#install') {
+    const osAsset = getOsReleaseAsset();
+    // Update download buttons (preserve SVG icons)
+    const downloadBtns = document.querySelectorAll('.js-download-btn');
+    downloadBtns.forEach(btn => {
+      const labelSpan = btn.querySelector('.js-download-label');
       btn.href = osAsset.url;
       btn.setAttribute('target', '_blank');
       btn.setAttribute('rel', 'noopener noreferrer');
-      // Directly show OS name in the button text
-      btn.textContent = osAsset.label;
+      if (labelSpan) {
+        // Show only OS name and version without generic 'Download for '
+        labelSpan.textContent = osAsset.label.replace('Download for ', '').replace(' (.exe)', '').replace(' (.dmg)', '').replace(' (.deb)', '');
+      }
+    });
+    const sloganEl = document.querySelector('.hero-slogan');
+    if (sloganEl) {
+      const sloganText = 'Deploy with Precision.';
+      sloganEl.textContent = '';
+      let i = 0;
+      const interval = setInterval(() => {
+        sloganEl.textContent += sloganText.charAt(i);
+        i++;
+        if (i >= sloganText.length) clearInterval(interval);
+      }, 80);
     }
-  });
-  // Typing animation for the hero slogan
-  const sloganEl = document.querySelector('.hero-slogan');
-  if (sloganEl) {
-    const sloganText = 'Deploy with Precision.';
-    sloganEl.textContent = '';
-    let i = 0;
-    const interval = setInterval(() => {
       sloganEl.textContent += sloganText.charAt(i);
       i++;
       if (i >= sloganText.length) clearInterval(interval);
