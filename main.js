@@ -5,12 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
   faqItems.forEach(item => {
     const button = item.querySelector('.faq-question');
     button.addEventListener('click', () => {
-      // Toggle current item
       const isOpen = item.classList.contains('open');
-      
-      // Optional: Close others
-      // faqItems.forEach(otherItem => otherItem.classList.remove('open'));
-      
       if (!isOpen) {
         item.classList.add('open');
       } else {
@@ -25,7 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
     copyBtn.addEventListener('click', () => {
       const commandText = 'npm install -g autoflow-cli';
       navigator.clipboard.writeText(commandText).then(() => {
-        // Visual feedback
         const originalHTML = copyBtn.innerHTML;
         copyBtn.innerHTML = '<span class="text-signal" style="font-size:12px;font-family:var(--f-mono)">Copied!</span>';
         setTimeout(() => {
@@ -99,11 +93,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
-  
-  // 4. Hero Terminal Typwriter Effect
-  // Already has static text for structural reasons, but we can animate the cursor or do more if desired.
-  // Kept static mostly based on instructions, but CSS handles cursor blink.
-  
 
   // Scroll to top button logic
   const scrollToTopBtn = document.querySelector('.scroll-to-top');
@@ -126,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // 5. OS Detection & Direct GitHub Release Download Links
   const REPO_OWNER = 'primetech-live';
   const REPO_NAME = 'Autoflow-Release';
-  const RELEASE_TAG = '1.0.0';
+  const RELEASE_TAG = 'v1.0.0';
   const RELEASE_BASE = `https://github.com/${REPO_OWNER}/${REPO_NAME}/releases/download/${RELEASE_TAG}`;
 
   function getOsReleaseAsset() {
@@ -135,20 +124,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (userAgent.includes('win') || platform.includes('win')) {
       return {
-        url: `${RELEASE_BASE}/Autoflow-vNext Setup ${RELEASE_TAG}.exe`,
-        label: 'Download for Windows (.exe)',
+        url: `${RELEASE_BASE}/Autoflow-vNext.Setup.1.0.0.exe`,
+        label: 'DOWNLOAD FOR WINDOWS',
         badge: 'Windows (x64)'
       };
     } else if (userAgent.includes('mac') || platform.includes('mac')) {
       return {
-        url: `${RELEASE_BASE}/Autoflow-vNext-${RELEASE_TAG}-arm64.dmg`,
-        label: 'Download for macOS (.dmg)',
+        url: `${RELEASE_BASE}/Autoflow-vNext-1.0.0-arm64.dmg`,
+        label: 'DOWNLOAD FOR MACOS',
         badge: 'macOS (Universal / arm64)'
       };
     } else if (userAgent.includes('linux') || platform.includes('linux')) {
       return {
-        url: `${RELEASE_BASE}/autoflow-tech_${RELEASE_TAG}_amd64.deb`,
-        label: 'Download for Linux (.deb)',
+        url: `${RELEASE_BASE}/autoflow-tech_1.0.0_amd64.deb`,
+        label: 'DOWNLOAD FOR LINUX',
         badge: 'Linux (amd64)'
       };
     }
@@ -156,40 +145,36 @@ document.addEventListener('DOMContentLoaded', () => {
     // Default fallback
     return {
       url: `https://github.com/${REPO_OWNER}/${REPO_NAME}/releases/tag/${RELEASE_TAG}`,
-      label: 'Download Latest Release',
+      label: 'DOWNLOAD LATEST RELEASE',
       badge: 'Windows, macOS, Linux'
     };
   }
 
-    const osAsset = getOsReleaseAsset();
-    // Update download buttons (preserve SVG icons)
-    const downloadBtns = document.querySelectorAll('.js-download-btn');
-    downloadBtns.forEach(btn => {
-      const labelSpan = btn.querySelector('.js-download-label');
-      btn.href = osAsset.url;
-      btn.setAttribute('target', '_blank');
-      btn.setAttribute('rel', 'noopener noreferrer');
-      if (labelSpan) {
-        // Show only OS name and version without generic 'Download for '
-        labelSpan.textContent = osAsset.label.replace('Download for ', '').replace(' (.exe)', '').replace(' (.dmg)', '').replace(' (.deb)', '');
-      }
-    });
-    const sloganEl = document.querySelector('.hero-slogan');
-    if (sloganEl) {
-      const sloganText = 'Deploy with Precision.';
-      sloganEl.textContent = '';
-      let i = 0;
-      const interval = setInterval(() => {
-        sloganEl.textContent += sloganText.charAt(i);
-        i++;
-        if (i >= sloganText.length) clearInterval(interval);
-      }, 80);
+  const osAsset = getOsReleaseAsset();
+  // Update download buttons (preserve SVG icons)
+  const downloadBtns = document.querySelectorAll('.js-download-btn');
+  downloadBtns.forEach(btn => {
+    const labelSpan = btn.querySelector('.js-download-label');
+    btn.href = osAsset.url;
+    btn.setAttribute('target', '_blank');
+    btn.setAttribute('rel', 'noopener noreferrer');
+    if (labelSpan) {
+      labelSpan.textContent = osAsset.label;
     }
+  });
+
+  const sloganEl = document.querySelector('.hero-slogan');
+  if (sloganEl) {
+    const sloganText = 'Deploy with Precision.';
+    sloganEl.textContent = '';
+    let i = 0;
+    const interval = setInterval(() => {
       sloganEl.textContent += sloganText.charAt(i);
       i++;
       if (i >= sloganText.length) clearInterval(interval);
     }, 80);
   }
+
   // Display OS badge if element exists
   const osBadgeEl = document.querySelector('.js-os-badge');
   if (osBadgeEl) {
