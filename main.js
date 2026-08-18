@@ -117,51 +117,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const REPO_NAME = 'Autoflow-Release';
 
   function updateDownloadLinks(tag, version) {
-    const userAgent = navigator.userAgent.toLowerCase();
-    const platform = navigator.platform ? navigator.platform.toLowerCase() : '';
-    const releaseBase = `https://github.com/${REPO_OWNER}/${REPO_NAME}/releases/download/${tag}`;
-
-    let osAsset;
-    if (userAgent.includes('win') || platform.includes('win')) {
-      osAsset = {
-        url: `${releaseBase}/Autoflow-vNext.Setup.${version}.exe`,
-        label: 'DOWNLOAD FOR WINDOWS',
-        badge: 'Windows (x64)'
-      };
-    } else if (userAgent.includes('mac') || platform.includes('mac')) {
-      osAsset = {
-        url: `${releaseBase}/Autoflow-vNext-${version}-arm64.dmg`,
-        label: 'DOWNLOAD FOR MACOS',
-        badge: 'macOS (Universal / arm64)'
-      };
-    } else if (userAgent.includes('linux') || platform.includes('linux')) {
-      osAsset = {
-        url: `${releaseBase}/autoflow-tech_${version}_amd64.deb`,
-        label: 'DOWNLOAD FOR LINUX',
-        badge: 'Linux (amd64)'
-      };
-    } else {
-      osAsset = {
-        url: `https://github.com/${REPO_OWNER}/${REPO_NAME}/releases/latest`,
-        label: 'DOWNLOAD LATEST RELEASE',
-        badge: 'Windows, macOS, Linux'
-      };
-    }
+    const releasePageUrl = `https://github.com/${REPO_OWNER}/${REPO_NAME}/releases/tag/${tag}`;
 
     const downloadBtns = document.querySelectorAll('.js-download-btn');
     downloadBtns.forEach(btn => {
-      const labelSpan = btn.querySelector('.js-download-label');
-      btn.href = osAsset.url;
+      btn.href = releasePageUrl;
       btn.setAttribute('target', '_blank');
       btn.setAttribute('rel', 'noopener noreferrer');
-      if (labelSpan) {
-        labelSpan.textContent = osAsset.label;
-      }
     });
 
     const osBadgeEl = document.querySelector('.js-os-badge');
     if (osBadgeEl) {
-      osBadgeEl.textContent = `Auto-detected: ${osAsset.badge}`;
+      osBadgeEl.textContent = `Latest Release: ${tag}`;
     }
   }
 
