@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AutoFlow | Interactive Motion Graphic Explainer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/png" href="Assets/icon-1.png">
+  <style>
+    :root {
+      --c-graphite: #0f1013;
+      --c-panel: #17181c;
+      --c-panel-light: #1f2127;
+      --c-hairline: #2d3039;
+      --c-hairline-bright: #3f4350;
+      --c-primary: #2563eb;
+      --c-primary-glow: rgba(37, 99, 235, 0.4);
+      --c-signal: #60a5fa;
+      --c-signal-glow: rgba(96, 165, 250, 0.35);
+      --c-bone: #f1ede4;
+      --c-slate: #8f929d;
+      --c-danger: #ef4444;
+      --c-danger-glow: rgba(239, 68, 68, 0.3);
+      --c-success: #10b981;
+      --f-display: 'Archivo', sans-serif;
+      --f-mono: 'IBM Plex Mono', monospace;
+      --f-body: 'Inter', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--c-graphite);
+      color: var(--c-bone);
+      font-family: var(--f-body);
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      user-select: none;
+    }
+
+    /* Cinematic Theater Frame */
+    .theater-container {
+      width: 100%;
+      max-width: 1280px;
+      margin: 20px auto 40px auto;
+      padding: 0 20px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .theater-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 24px;
+      background: var(--c-panel);
+      border: 1px solid var(--c-hairline);
+      border-radius: 12px 12px 0 0;
+    }
+
+    .brand-badge {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-badge img {
+      width: 28px;
+      height: 28px;
+    }
+
+    .badge-tag {
+      font-family: var(--f-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      padding: 4px 8px;
+      background: rgba(37, 99, 235, 0.15);
+      border: 1px solid var(--c-primary);
+      color: var(--c-signal);
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .theater-controls-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .ctrl-btn {
+      background: var(--c-panel-light);
+      border: 1px solid var(--c-hairline);
+      color: var(--c-bone);
+      font-family: var(--f-mono);
+      font-size: 0.8rem;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .ctrl-btn:hover {
+      border-color: var(--c-signal);
+      color: #fff;
+      box-shadow: 0 0 15px var(--c-primary-glow);
+    }
+
+    .ctrl-btn.active {
+      background: var(--c-primary);
+      border-color: var(--c-signal);
+      color: #fff;
+    }
+
+    /* The Main Stage Screen */
+    .video-screen {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: radial-gradient(circle at 50% 30%, #1a1d24 0%, #0c0d10 90%);
+      border-left: 1px solid var(--c-hairline);
+      border-right: 1px solid var(--c-hairline);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.8);
+    }
+
+    /* Scanline & Vignette Overlay */
+    .scanlines {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+      background-size: 100% 4px, 6px 100%;
+      z-index: 50;
+      opacity: 0.6;
+    }
+
+    /* Scene Container */
+    .scene-viewport {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    .scene {
+      position: absolute;
+      inset: 0;
+      padding: 5% 7%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transform: scale(0.97) translateY(12px);
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.6s;
+      z-index: 10;
+    }
+
+    .scene.active {
+      opacity: 1;
+      visibility: visible;
+      transform: scale(1) translateY(0);
+      z-index: 20;
+    }
+
+    /* SCENE 1: The Broken Cloud */
+    .scene-title-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--f-mono);
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      color: var(--c-danger);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--c-danger);
+      box-shadow: 0 0 10px var(--c-danger);
+      animation: pulseAlert 1.2s infinite;
+    }
+
+    .pulse-dot.blue {
+      background: var(--c-signal);
+      box-shadow: 0 0 10px var(--c-signal);
+      animation: pulseBlue 1.5s infinite;
+    }
+
+    @keyframes pulseAlert {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.4); opacity: 0.4; }
+    }
+
+    @keyframes pulseBlue {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.3); opacity: 0.5; }
+    }
+
+    .scene-h1 {
+      font-family: var(--f-display);
+      font-size: clamp(1.8rem, 3.5vw, 3rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+      color: var(--c-bone);
+    }
+
+    .scene-h1 span.highlight-red {
+      color: #f87171;
+      text-shadow: 0 0 25px rgba(239, 68, 68, 0.4);
+    }
+
+    .scene-h1 span.highlight-blue {
+      color: var(--c-signal);
+      text-shadow: 0 0 25px var(--c-primary-glow);
+    }
+
+    .cards-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 16px;
+    }
+
+    .problem-card {
+      background: rgba(23, 24, 28, 0.85);
+      border: 1px solid rgba(239, 68, 68, 0.25);
+      border-radius: 10px;
+      padding: 24px 20px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      transform: translateY(20px);
+      opacity: 0;
+      transition: all 0.5s ease;
+    }
+
+    .scene.active .problem-card:nth-child(1) { transition-delay: 0.3s; opacity: 1; transform: translateY(0); }
+    .scene.active .problem-card:nth-child(2) { transition-delay: 0.6s; opacity: 1; transform: translateY(0); }
+    .scene.active .problem-card:nth-child(3) { transition-delay: 0.9s; opacity: 1; transform: translateY(0); }
+
+    .problem-card h3 {
+      font-family: var(--f-display);
+      font-size: 1.15rem;
+      margin-bottom: 8px;
+      color: #fca5a5;
+    }
+
+    .problem-card p {
+      font-size: 0.85rem;
+      color: var(--c-slate);
+      line-height: 1.5;
+    }
+
+    .problem-stat {
+      font-family: var(--f-mono);
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #ef4444;
+      margin-bottom: 8px;
+    }
+
+    /* SCENE 2: The Solution Architecture */
+    .solution-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 36px;
+      align-items: center;
+    }
+
+    .pipe-diagram {
+      background: var(--c-panel);
+      border: 1px solid var(--c-hairline);
+      border-radius: 12px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      position: relative;
+    }
+
+    .pipe-node {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 18px;
+      background: var(--c-panel-light);
+      border: 1px solid var(--c-hairline-bright);
+      border-radius: 8px;
+    }
+
+    .pipe-node.highlight {
+      border-color: var(--c-primary);
+      box-shadow: 0 0 20px rgba(37, 99, 235, 0.2);
+    }
+
+    .pipe-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 6px;
+      background: rgba(37, 99, 235, 0.2);
+      border: 1px solid var(--c-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--c-signal);
+      font-family: var(--f-mono);
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .pipe-connector {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: var(--c-signal);
+      font-family: var(--f-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+    }
+
+    .pipe-line {
+      height: 2px;
+      flex-grow: 1;
+      background: linear-gradient(90deg, var(--c-primary), var(--c-signal));
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pipe-line::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 30%; height: 100%;
+      background: #fff;
+      animation: pipeFlow 1.5s infinite linear;
+    }
+
+    @keyframes pipeFlow {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(400%); }
+    }
+
+    /* SCENE 3: Speed Benchmark & Terminal */
+    .benchmark-layout {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 28px;
+      align-items: stretch;
+      height: 100%;
+      max-height: 480px;
+    }
+
+    .sim-terminal {
+      background: #090a0d;
+      border: 1px solid var(--c-hairline);
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      font-family: var(--f-mono);
+      font-size: 0.78rem;
+    }
+
+    .sim-terminal-bar {
+      background: #15161a;
+      padding: 8px 14px;
+      border-bottom: 1px solid var(--c-hairline);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .terminal-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .t-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #333;
+    }
+
+    .t-dot:nth-child(1) { background: #ef4444; }
+    .t-dot:nth-child(2) { background: #f59e0b; }
+    .t-dot:nth-child(3) { background: #10b981; }
+
+    .sim-terminal-body {
+      padding: 16px;
+      color: #94a3b8;
+      line-height: 1.6;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      overflow-y: auto;
+    }
+
+    .t-cmd {
+      color: #f8fafc;
+      font-weight: 600;
+    }
+
+    .t-cyan { color: #38bdf8; }
+    .t-green { color: #4ade80; font-weight: 600; }
+    .t-dim { color: #64748b; }
+
+    /* Stopwatch gauge */
+    .stopwatch-card {
+      background: var(--c-panel);
+      border: 1px solid var(--c-hairline);
+      border-radius: 10px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+    }
+
+    .stopwatch-digits {
+      font-family: var(--f-mono);
+      font-size: clamp(3rem, 6vw, 4.8rem);
+      font-weight: 800;
+      color: var(--c-signal);
+      text-shadow: 0 0 30px var(--c-primary-glow);
+      line-height: 1;
+      margin: 12px 0;
+    }
+
+    .status-badge-live {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid var(--c-success);
+      color: #34d399;
+      font-family: var(--f-mono);
+      font-size: 0.8rem;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-weight: 600;
+    }
+
+    .stage-pills {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: 100%;
+      margin-top: 18px;
+    }
+
+    .stage-pill {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--c-panel-light);
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-family: var(--f-mono);
+      border-left: 3px solid var(--c-slate);
+    }
+
+    .stage-pill.done {
+      border-left-color: var(--c-success);
+      color: var(--c-bone);
+    }
+
+    /* SCENE 4: Competitor Matrix */
+    .matrix-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      background: var(--c-panel);
+      border: 1px solid var(--c-hairline);
+      border-radius: 10px;
+      overflow: hidden;
+      font-size: 0.85rem;
+    }
+
+    .matrix-table th, .matrix-table td {
+      padding: 12px 18px;
+      text-align: left;
+      border-bottom: 1px solid var(--c-hairline);
+    }
+
+    .matrix-table th {
+      background: var(--c-panel-light);
+      font-family: var(--f-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      color: var(--c-slate);
+      text-transform: uppercase;
+    }
+
+    .matrix-table th.col-highlight, .matrix-table td.col-highlight {
+      background: rgba(37, 99, 235, 0.12);
+      border-left: 1px solid var(--c-primary);
+      border-right: 1px solid var(--c-primary);
+    }
+
+    .matrix-table th.col-highlight {
+      color: var(--c-signal);
+      font-weight: 700;
+    }
+
+    .matrix-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .check-green { color: #10b981; font-weight: 700; }
+    .cross-red { color: #ef4444; font-weight: 700; }
+
+    /* SCENE 5: Pros & Cons & CTA */
+    .verdict-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .verdict-card {
+      background: var(--c-panel);
+      border: 1px solid var(--c-hairline);
+      border-radius: 10px;
+      padding: 24px;
+    }
+
+    .verdict-card.pros {
+      border-top: 3px solid var(--c-signal);
+    }
+
+    .verdict-card.cons {
+      border-top: 3px solid var(--c-danger);
+    }
+
+    .verdict-card h3 {
+      font-family: var(--f-display);
+      font-size: 1.1rem;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .verdict-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 0.85rem;
+      color: var(--c-slate);
+    }
+
+    .verdict-card ul li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.4;
+    }
+
+    .action-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+      margin-top: 10px;
+    }
+
+    .btn-big {
+      background: var(--c-primary);
+      color: #fff;
+      font-family: var(--f-mono);
+      font-size: 0.9rem;
+      font-weight: 700;
+      padding: 14px 28px;
+      border-radius: 8px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid var(--c-signal);
+      box-shadow: 0 4px 20px var(--c-primary-glow);
+      transition: all 0.2s ease;
+    }
+
+    .btn-big:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(37, 99, 235, 0.6);
+    }
+
+    /* Bottom Player Bar & Timeline */
+    .player-bar {
+      background: var(--c-panel);
+      border: 1px solid var(--c-hairline);
+      border-top: none;
+      border-radius: 0 0 12px 12px;
+      padding: 16px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .timeline-track {
+      position: relative;
+      height: 8px;
+      background: var(--c-hairline);
+      border-radius: 4px;
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    .timeline-progress {
+      position: absolute;
+      top: 0; left: 0; bottom: 0;
+      width: 0%;
+      background: linear-gradient(90deg, var(--c-primary), var(--c-signal));
+      box-shadow: 0 0 10px var(--c-primary);
+      transition: width 0.1s linear;
+    }
+
+    .chapters-row {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+    }
+
+    .chapter-tab {
+      background: transparent;
+      border: 1px solid transparent;
+      padding: 6px 8px;
+      border-radius: 6px;
+      color: var(--c-slate);
+      font-family: var(--f-mono);
+      font-size: 0.72rem;
+      text-align: left;
+      cursor: pointer;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      transition: all 0.2s;
+    }
+
+    .chapter-tab:hover {
+      color: var(--c-bone);
+      background: var(--c-panel-light);
+    }
+
+    .chapter-tab.active {
+      color: var(--c-signal);
+      border-color: var(--c-primary);
+      background: rgba(37, 99, 235, 0.15);
+      font-weight: 600;
+    }
+
+    .player-actions-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .time-readout {
+      font-family: var(--f-mono);
+      font-size: 0.85rem;
+      color: var(--c-slate);
+    }
+
+    .time-readout strong {
+      color: var(--c-bone);
+    }
+
+    @media (max-width: 900px) {
+      .cards-row { grid-template-columns: 1fr; }
+      .solution-grid { grid-template-columns: 1fr; }
+      .benchmark-layout { grid-template-columns: 1fr; height: auto; max-height: none; }
+      .verdict-grid { grid-template-columns: 1fr; }
+      .chapters-row { display: none; }
+      .video-screen { aspect-ratio: auto; min-height: 520px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="theater-container">
+    <!-- Top Bar -->
+    <div class="theater-header">
+      <div class="brand-badge">
+        <a href="index.html" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: inherit;">
+          <img src="Assets/icon-1.png" alt="AutoFlow Logo">
+          <span style="font-family: var(--f-display); font-weight: 800; font-size: 1.1rem; letter-spacing: -0.02em;">AutoFlow</span>
+        </a>
+        <span class="badge-tag">USECASE EXPLAINER</span>
+      </div>
+
+      <div class="theater-controls-top">
+        <a href="autoflow_usecase_explainer.mp4" download="autoflow_usecase_explainer.mp4" class="ctrl-btn active" style="text-decoration: none; background: var(--c-primary); color: #fff; font-weight: 600;">
+          <span>⬇</span> Download Raw MP4 (1080p)
+        </a>
+        <button id="viewModeBtn" class="ctrl-btn" title="Toggle Video Player / Motion Graphic Mode">
+          <span>🎬</span> <span id="viewModeText">Switch to Interactive Mode</span>
+        </button>
+        <button id="fullscreenBtn" class="ctrl-btn" title="Toggle Fullscreen">
+          <span>⛶</span> Fullscreen
+        </button>
+        <a href="index.html" class="ctrl-btn" style="text-decoration: none;">
+          &larr; Back to Website
+        </a>
+      </div>
+    </div>
+
+    <!-- Main Screen Stage -->
+    <div class="video-screen" id="videoScreen">
+      <!-- Direct MP4 Video Player -->
+      <video id="mainMp4Player" src="autoflow_usecase_explainer.mp4" controls autoplay playsinline style="width: 100%; height: 100%; object-fit: contain; background: #000; z-index: 30; display: block;"></video>
+      <div class="scanlines" style="pointer-events: none;"></div>
+
+      <div class="scene-viewport" id="motionSceneViewport" style="display: none;">
+        
+        <!-- SCENE 1: The Broken Cloud -->
+        <div class="scene active" id="scene-0">
+          <div class="scene-title-badge">
+            <span class="pulse-dot"></span>
+            CHAPTER 01 // THE CLOUD PARADOX
+          </div>
+          <h1 class="scene-h1">
+            Why modern cloud deployments are <span class="highlight-red">broken & overpriced</span>.
+          </h1>
+          <p style="font-size: 0.95rem; color: var(--c-slate); max-width: 680px; line-height: 1.6; margin-bottom: 24px;">
+            Freelancers, startups, and developers are caught between two painful extremes: paying $20–$100/mo per seat for SaaS lock-in, or spending hours writing brittle Docker & Nginx scripts.
+          </p>
+
+          <div class="cards-row">
+            <div class="problem-card">
+              <div class="problem-stat">$600+/yr</div>
+              <h3>The SaaS Tax</h3>
+              <p>Platform markups charge you 5x to 10x the price of real cloud compute for basic container hosting.</p>
+            </div>
+            <div class="problem-card">
+              <div class="problem-stat">Keys Exposed</div>
+              <h3>Security Blindspot</h3>
+              <p>Uploading root SSH keys and production `.env` secrets into 3rd-party SaaS pipelines creates unnecessary liability.</p>
+            </div>
+            <div class="problem-card">
+              <div class="problem-stat">3-5 Min</div>
+              <h3>Shared CI Queues</h3>
+              <p>Waiting for congested remote build runners when your local machine has a powerful 12-core CPU sitting idle.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- SCENE 2: The AutoFlow Way -->
+        <div class="scene" id="scene-1">
+          <div class="scene-title-badge">
+            <span class="pulse-dot blue"></span>
+            CHAPTER 02 // THE ARCHITECTURE
+          </div>
+          <h1 class="scene-h1">
+            Enter AutoFlow: <span class="highlight-blue">Local-First Orchestration</span>.
+          </h1>
+          
+          <div class="solution-grid">
+            <div>
+              <p style="font-size: 1rem; color: var(--c-slate); line-height: 1.6; margin-bottom: 20px;">
+                AutoFlow is a desktop application (Electron) with an integrated CLI engine that runs entirely on <strong>your machine</strong>.
+              </p>
+              <ul style="list-style: none; display: flex; flex-direction: column; gap: 14px; font-size: 0.9rem;">
+                <li style="display: flex; align-items: center; gap: 12px;">
+                  <span style="color: var(--c-signal); font-family: var(--f-mono); font-weight: 700;">01.</span>
+                  <span><strong>Zero Server Agent:</strong> Communicates through standard encrypted SSH. No heavy daemons.</span>
+                </li>
+                <li style="display: flex; align-items: center; gap: 12px;">
+                  <span style="color: var(--c-signal); font-family: var(--f-mono); font-weight: 700;">02.</span>
+                  <span><strong>Keys Stay Local:</strong> SSH credentials and environment variables never leave your computer.</span>
+                </li>
+                <li style="display: flex; align-items: center; gap: 12px;">
+                  <span style="color: var(--c-signal); font-family: var(--f-mono); font-weight: 700;">03.</span>
+                  <span><strong>Deploy to Any VPS:</strong> DigitalOcean, Hetzner, AWS, Linode, or home lab hardware.</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="pipe-diagram">
+              <div class="pipe-node highlight">
+                <div class="pipe-icon">💻</div>
+                <div>
+                  <div style="font-family: var(--f-mono); font-size: 0.85rem; font-weight: 600;">Developer Workstation</div>
+                  <div style="font-size: 0.75rem; color: var(--c-slate);">AutoFlow Desktop + CLI</div>
+                </div>
+              </div>
+
+              <div class="pipe-connector">
+                <span>LOCAL VAULT ENCRYPTION</span>
+                <div class="pipe-line"></div>
+                <span>DIRECT SSH TUNNEL</span>
+              </div>
+
+              <div class="pipe-node">
+                <div class="pipe-icon" style="border-color: #10b981; color: #10b981; background: rgba(16,185,129,0.15);">☁️</div>
+                <div>
+                  <div style="font-family: var(--f-mono); font-size: 0.85rem; font-weight: 600;">Your Raw VPS ($4–$6/mo)</div>
+                  <div style="font-size: 0.75rem; color: var(--c-slate);">Docker + Nginx Auto-Provisioned</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SCENE 3: Speed Benchmark & Terminal -->
+        <div class="scene" id="scene-2">
+          <div class="scene-title-badge">
+            <span class="pulse-dot blue"></span>
+            CHAPTER 03 // REAL-TIME EXECUTION & SPEED
+          </div>
+          <h1 class="scene-h1" style="margin-bottom: 16px;">
+            From Code to Live Production in <span class="highlight-blue" id="headlineTimer">12.8 Seconds</span>.
+          </h1>
+
+          <div class="benchmark-layout">
+            <!-- Simulated Live Terminal -->
+            <div class="sim-terminal">
+              <div class="sim-terminal-bar">
+                <div class="terminal-dots">
+                  <div class="t-dot"></div>
+                  <div class="t-dot"></div>
+                  <div class="t-dot"></div>
+                </div>
+                <span class="t-dim">autoflow-terminal-v1.0.0</span>
+                <span></span>
+              </div>
+              <div class="sim-terminal-body" id="terminalOutput">
+                <div><span class="t-cyan">$</span> <span class="t-cmd">autoflow deploy --prod</span></div>
+                <div class="t-dim">[INIT] Scanning project structure...</div>
+                <div>[✔] <span class="t-cyan">Next.js + Tailwind</span> detected (auto-config applied)</div>
+                <div>[✔] Establishing SSH tunnel to <span class="t-cyan">18.212.234.29</span>...</div>
+                <div>[✔] Building production image on VPS Docker daemon...</div>
+                <div>[✔] Health check passed on port 3000 (HTTP 200 OK)</div>
+                <div>[✔] Zero-downtime routing swap complete!</div>
+                <div class="t-green">✔ DEPLOY SUCCESSFUL: https://myapp.com (12.8s total)</div>
+              </div>
+            </div>
+
+            <!-- Live Benchmark Clock & Status -->
+            <div class="stopwatch-card">
+              <div style="font-family: var(--f-mono); font-size: 0.75rem; letter-spacing: 0.1em; color: var(--c-slate); text-transform: uppercase;">
+                TOTAL ROLLOUT DURATION
+              </div>
+              <div class="stopwatch-digits" id="liveTimerDisplay">12.8s</div>
+              <div class="status-badge-live">
+                <span>●</span> ZERO-DOWNTIME ROLLOVER
+              </div>
+
+              <div class="stage-pills">
+                <div class="stage-pill done">
+                  <span>1. Auto-detection</span>
+                  <span>0.4s</span>
+                </div>
+                <div class="stage-pill done">
+                  <span>2. Secure SSH Handshake</span>
+                  <span>1.1s</span>
+                </div>
+                <div class="stage-pill done">
+                  <span>3. Cached Binary Build</span>
+                  <span>9.6s</span>
+                </div>
+                <div class="stage-pill done">
+                  <span>4. Atomic Traffic Swap</span>
+                  <span>0.7s</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SCENE 4: Head-to-Head Comparison -->
+        <div class="scene" id="scene-3">
+          <div class="scene-title-badge">
+            <span class="pulse-dot blue"></span>
+            CHAPTER 04 // COMPETITIVE MATRIX
+          </div>
+          <h1 class="scene-h1" style="margin-bottom: 20px;">
+            How AutoFlow <span class="highlight-blue">beats traditional alternatives</span>.
+          </h1>
+
+          <table class="matrix-table">
+            <thead>
+              <tr>
+                <th>CRITERIA</th>
+                <th>CLOUD SAAS (VERCEL / HEROKU)</th>
+                <th>MANUAL DIY SCRIPTS</th>
+                <th class="col-highlight">AUTOFLOW (RECOMMENDED)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Monthly Running Cost</strong></td>
+                <td><span class="cross-red">Expensive</span> ($20–$100+/mo per dev)</td>
+                <td><span class="check-green">Cheap</span> ($4 VPS only)</td>
+                <td class="col-highlight"><span class="check-green">Free Desktop App + $4 VPS</span></td>
+              </tr>
+              <tr>
+                <td><strong>SSH Key Security</strong></td>
+                <td><span class="cross-red">Stored on Cloud Servers</span></td>
+                <td><span class="cross-red">Shared in plain bash files</span></td>
+                <td class="col-highlight"><span class="check-green">100% Local in OS Keyring</span></td>
+              </tr>
+              <tr>
+                <td><strong>Setup Overhead</strong></td>
+                <td><span class="check-green">Fast</span> (5 mins)</td>
+                <td><span class="cross-red">Painful</span> (Hours configuring Docker/Nginx/SSL)</td>
+                <td class="col-highlight"><span class="check-green">Instant</span> (Zero-Config Auto-Detect)</td>
+              </tr>
+              <tr>
+                <td><strong>Deployment Speed</strong></td>
+                <td><span class="cross-red">Queued</span> (2 to 5 mins)</td>
+                <td><span class="cross-red">Manual</span> (Slow & Error-prone)</td>
+                <td class="col-highlight"><span class="check-green">Instant</span> (Direct 12s Rollout)</td>
+              </tr>
+              <tr>
+                <td><strong>Zero-Downtime Rollover</strong></td>
+                <td><span class="check-green">Yes</span></td>
+                <td><span class="cross-red">No (Downtime during restart)</span></td>
+                <td class="col-highlight"><span class="check-green">Yes (Blue/Green Container Switch)</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- SCENE 5: Pros & Cons + Direct CTA -->
+        <div class="scene" id="scene-4">
+          <div class="scene-title-badge">
+            <span class="pulse-dot blue"></span>
+            CHAPTER 05 // THE HONEST VERDICT
+          </div>
+          <h1 class="scene-h1" style="margin-bottom: 20px;">
+            Transparent Evaluation: <span class="highlight-blue">Pros & Cons</span>.
+          </h1>
+
+          <div class="verdict-grid">
+            <div class="verdict-card pros">
+              <h3 style="color: #38bdf8;">✔ Why Use AutoFlow (The Pros)</h3>
+              <ul>
+                <li><strong>Total Cost Reduction:</strong> Save $300–$1,200/year by hosting on pure VPS infrastructure.</li>
+                <li><strong>Absolute Data Privacy:</strong> No vendor can lock your account, read your secrets, or inspect source code.</li>
+                <li><strong>Automated SSL & Reverse Proxy:</strong> Automatic Let's Encrypt certification without touching Nginx configs.</li>
+                <li><strong>Fast Atomic Rollbacks:</strong> Revert instantly if a production container fails health inspection.</li>
+              </ul>
+            </div>
+
+            <div class="verdict-card cons">
+              <h3 style="color: #f87171;">✖ When NOT to Use It (The Cons)</h3>
+              <ul>
+                <li><strong>No Global Edge Functions:</strong> If your app demands multi-region edge compute across 40 continents simultaneously.</li>
+                <li><strong>Requires Root SSH Access:</strong> You need an Ubuntu or Debian VPS (DigitalOcean droplet, Hetzner cloud, or AWS EC2).</li>
+                <li><strong>Local Workstation Required:</strong> Since it is local-first, deployments are initiated from your machine.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="action-row">
+            <a href="https://github.com/primetech-live/Autoflow-Release/releases/download/v1.0.0/Autoflow-vNext_v1.0.0.exe" class="btn-big js-download-btn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+              <span class="js-download-label">DOWNLOAD FOR WINDOWS</span>
+            </a>
+            <a href="index.html#install" class="ctrl-btn" style="padding: 14px 22px; font-size: 0.9rem; text-decoration: none;">
+              Explore All Platforms (.dmg / .deb)
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Bottom Player Controls -->
+    <div class="player-bar">
+      <!-- Scrubbable Timeline Track -->
+      <div class="timeline-track" id="timelineTrack">
+        <div class="timeline-progress" id="timelineProgress"></div>
+      </div>
+
+      <!-- Chapter Tabs -->
+      <div class="chapters-row">
+        <button class="chapter-tab active" data-scene="0">01. The Problem</button>
+        <button class="chapter-tab" data-scene="1">02. AutoFlow Way</button>
+        <button class="chapter-tab" data-scene="2">03. 12s Benchmark</button>
+        <button class="chapter-tab" data-scene="3">04. Comparison</button>
+        <button class="chapter-tab" data-scene="4">05. Pros & Cons</button>
+      </div>
+
+      <!-- Action Buttons & Timing -->
+      <div class="player-actions-row">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <button id="playPauseBtn" class="ctrl-btn" style="padding: 8px 18px; font-weight: 700;">
+            <span id="playIcon">⏸</span> <span id="playText">PAUSE</span>
+          </button>
+          <button id="prevBtn" class="ctrl-btn" title="Previous Scene">⏮ Prev</button>
+          <button id="nextBtn" class="ctrl-btn" title="Next Scene">Next ⏭</button>
+          <button id="restartBtn" class="ctrl-btn" title="Restart Explainer">↺ Restart</button>
+        </div>
+
+        <div class="time-readout">
+          <span id="currentTime">00:00</span> / <strong id="totalDuration">01:15</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+  <script>
+    // ----------------------------------------------------
+    // Video Presentation Orchestrator
+    // ----------------------------------------------------
+    document.addEventListener('DOMContentLoaded', () => {
+      const scenes = [
+        { id: 0, duration: 15, name: 'The Problem' },
+        { id: 1, duration: 15, name: 'AutoFlow Architecture' },
+        { id: 2, duration: 16, name: '12s Benchmark' },
+        { id: 3, duration: 15, name: 'Competitive Matrix' },
+        { id: 4, duration: 14, name: 'Pros & Cons Verdict' }
+      ];
+
+      const TOTAL_SECONDS = scenes.reduce((acc, s) => acc + s.duration, 0);
+
+      let currentSceneIndex = 0;
+      let sceneProgress = 0; // seconds into current scene
+      let isPlaying = true;
+      let soundEnabled = false;
+      let audioCtx = null;
+
+      const sceneEls = document.querySelectorAll('.scene');
+      const chapterTabs = document.querySelectorAll('.chapter-tab');
+      const progressBar = document.getElementById('timelineProgress');
+      const currentTimeEl = document.getElementById('currentTime');
+      const totalDurationEl = document.getElementById('totalDuration');
+      const playPauseBtn = document.getElementById('playPauseBtn');
+      const playIcon = document.getElementById('playIcon');
+      const playText = document.getElementById('playText');
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      const restartBtn = document.getElementById('restartBtn');
+      const timelineTrack = document.getElementById('timelineTrack');
+      const soundToggle = document.getElementById('soundToggle');
+      const soundIcon = document.getElementById('soundIcon');
+      const soundText = document.getElementById('soundText');
+      const fullscreenBtn = document.getElementById('fullscreenBtn');
+      const videoScreen = document.getElementById('videoScreen');
+
+      function formatTime(sec) {
+        const m = Math.floor(sec / 60);
+        const s = Math.floor(sec % 60);
+        return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+      }
+
+      totalDurationEl.textContent = formatTime(TOTAL_SECONDS);
+
+      // Web Audio Synthesizer for UI sound cues
+      function playTone(freq, type = 'sine', duration = 0.15, gainVal = 0.08) {
+        if (!soundEnabled) return;
+        try {
+          if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          if (audioCtx.state === 'suspended') audioCtx.resume();
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = type;
+          osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+          gain.gain.setValueAtTime(gainVal, audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start();
+          osc.stop(audioCtx.currentTime + duration);
+        } catch (e) {
+          // ignore audio failure
+        }
+      }
+
+      function playSceneChangeSound() {
+        playTone(440, 'sine', 0.1, 0.05);
+        setTimeout(() => playTone(660, 'triangle', 0.18, 0.07), 80);
+      }
+
+      function switchScene(index) {
+        if (index < 0) index = 0;
+        if (index >= scenes.length) index = scenes.length - 1;
+
+        currentSceneIndex = index;
+        sceneProgress = 0;
+
+        sceneEls.forEach((el, i) => {
+          if (i === currentSceneIndex) {
+            el.classList.add('active');
+          } else {
+            el.classList.remove('active');
+          }
+        });
+
+        chapterTabs.forEach((tab, i) => {
+          if (i === currentSceneIndex) {
+            tab.classList.add('active');
+          } else {
+            tab.classList.remove('active');
+          }
+        });
+
+        playSceneChangeSound();
+      }
+
+      function getTotalElapsed() {
+        let elapsed = 0;
+        for (let i = 0; i < currentSceneIndex; i++) {
+          elapsed += scenes[i].duration;
+        }
+        elapsed += sceneProgress;
+        return elapsed;
+      }
+
+      // Main Animation Loop
+      let lastTimestamp = performance.now();
+
+      function tick(now) {
+        const delta = (now - lastTimestamp) / 1000;
+        lastTimestamp = now;
+
+        if (isPlaying) {
+          sceneProgress += delta;
+
+          if (sceneProgress >= scenes[currentSceneIndex].duration) {
+            if (currentSceneIndex < scenes.length - 1) {
+              switchScene(currentSceneIndex + 1);
+            } else {
+              // Loop back or hold on CTA
+              isPlaying = false;
+              playIcon.textContent = '▶';
+              playText.textContent = 'REPLAY';
+            }
+          }
+
+          const elapsed = getTotalElapsed();
+          const percent = Math.min(100, (elapsed / TOTAL_SECONDS) * 100);
+          progressBar.style.width = percent + '%';
+          currentTimeEl.textContent = formatTime(elapsed);
+        }
+
+        requestAnimationFrame(tick);
+      }
+
+      requestAnimationFrame(tick);
+
+      // Controls
+      playPauseBtn.addEventListener('click', () => {
+        if (!isPlaying && currentSceneIndex === scenes.length - 1 && sceneProgress >= scenes[currentSceneIndex].duration) {
+          switchScene(0);
+          isPlaying = true;
+          playIcon.textContent = '⏸';
+          playText.textContent = 'PAUSE';
+          return;
+        }
+
+        isPlaying = !isPlaying;
+        playIcon.textContent = isPlaying ? '⏸' : '▶';
+        playText.textContent = isPlaying ? 'PAUSE' : 'PLAY';
+        playTone(350, 'sine', 0.08);
+      });
+
+      prevBtn.addEventListener('click', () => {
+        if (currentSceneIndex > 0) switchScene(currentSceneIndex - 1);
+      });
+
+      nextBtn.addEventListener('click', () => {
+        if (currentSceneIndex < scenes.length - 1) switchScene(currentSceneIndex + 1);
+      });
+
+      restartBtn.addEventListener('click', () => {
+        switchScene(0);
+        isPlaying = true;
+        playIcon.textContent = '⏸';
+        playText.textContent = 'PAUSE';
+      });
+
+      chapterTabs.forEach((tab, index) => {
+        tab.addEventListener('click', () => {
+          switchScene(index);
+          isPlaying = true;
+          playIcon.textContent = '⏸';
+          playText.textContent = 'PAUSE';
+        });
+      });
+
+      timelineTrack.addEventListener('click', (e) => {
+        const rect = timelineTrack.getBoundingClientRect();
+        const clickRatio = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        const targetSeconds = clickRatio * TOTAL_SECONDS;
+
+        let accumulated = 0;
+        for (let i = 0; i < scenes.length; i++) {
+          if (accumulated + scenes[i].duration >= targetSeconds) {
+            currentSceneIndex = i;
+            sceneProgress = targetSeconds - accumulated;
+            switchScene(i);
+            break;
+          }
+          accumulated += scenes[i].duration;
+        }
+      });
+
+      // View Mode Toggle (Video vs Interactive)
+      const viewModeBtn = document.getElementById('viewModeBtn');
+      const viewModeText = document.getElementById('viewModeText');
+      const mainMp4Player = document.getElementById('mainMp4Player');
+      const motionSceneViewport = document.getElementById('motionSceneViewport');
+
+      viewModeBtn.addEventListener('click', () => {
+        if (mainMp4Player.style.display !== 'none') {
+          // Switch to Interactive
+          mainMp4Player.pause();
+          mainMp4Player.style.display = 'none';
+          motionSceneViewport.style.display = 'block';
+          viewModeText.textContent = 'Switch to Video Mode (MP4)';
+          switchScene(0);
+          isPlaying = true;
+        } else {
+          // Switch to MP4 Video
+          isPlaying = false;
+          motionSceneViewport.style.display = 'none';
+          mainMp4Player.style.display = 'block';
+          mainMp4Player.play();
+          viewModeText.textContent = 'Switch to Interactive Mode';
+        }
+      });
+
+      // Fullscreen Toggle
+      fullscreenBtn.addEventListener('click', () => {
+        if (!document.fullscreenElement) {
+          videoScreen.requestFullscreen().catch(err => console.log(err));
+        } else {
+          document.exitFullscreen().catch(err => console.log(err));
+        }
+      });
+    });
+  </script>
+</body>
+</html>
