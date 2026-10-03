@@ -112,39 +112,111 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 5. OS Detection & Dynamic GitHub Release Download Links
+  // 5. OS Detection & Direct GitHub Release Download Links
   const REPO_OWNER = 'primetech-live';
   const REPO_NAME = 'Autoflow-Release';
+  const DEFAULT_TAG = 'v1.0.0';
 
-  function updateDownloadLinks(tag, version) {
-    const releasePageUrl = `https://github.com/${REPO_OWNER}/${REPO_NAME}/releases/tag/${tag}`;
+  // ponytail: platform & userAgent detection covers Win/Mac/Linux; mobile/unknown defaults to Windows binary
+  function detectOS() {
+    const ua = (navigator.userAgent || '').toLowerCase();
+    const platform = (navigator.userAgentData?.platform || navigator.platform || '').toLowerCase();
 
+    if (ua.includes('iphone') || ua.includes('ipad') || ua.includes('ipod')) return 'ios';
+    if (ua.includes('android')) return 'android';
+    if (platform.includes('win') || ua.includes('win')) return 'windows';
+    if (platform.includes('mac') || ua.includes('mac')) return 'mac';
+    if (platform.includes('linux') || ua.includes('linux') || ua.includes('x11')) return 'linux';
+    return 'unknown';
+  }
+
+  const downloadAssets = {
+    windows: {
+      url: `https://github.com/${REPO_OWNER}/${REPO_NAME}/releases/download/${DEFAULT_TAG}/Autoflow-vNext_${DEFAULT_TAG}.exe`,
+      label: 'DOWNLOAD FOR WINDOWS',
+      subtext: 'Windows (.exe)'
+    },
+    mac: {
+      url: `https://github.com/${REPO_OWNER}/${REPO_NAME}/releases/download/${DEFAULT_TAG}/Autoflow-vNext-1.0.0-arm64.dmg`,
+      label: 'DOWNLOAD FOR MACOS',
+      subtext: 'macOS (.dmg)'
+    },
+    linux: {
+      url: `https://github.com/${REPO_OWNER}/${REPO_NAME}/releases/download/${DEFAULT_TAG}/autoflow-tech_1.0.0_amd64.deb`,
+      label: 'DOWNLOAD FOR LINUX',
+      subtext: 'Linux (.deb)'
+    },
+    unknown: {
+      url: `https://github.com/${REPO_OWNER}/${REPO_NAME}/releases/download/${DEFAULT_TAG}/Autoflow-vNext_${DEFAULT_TAG}.exe`,
+      label: 'DOWNLOAD DESKTOP APP',
+      subtext: 'Windows, macOS, Linux'
+    }
+  };
+
+  function updateDownloadLinks(tag = DEFAULT_TAG) {
+    const os = detectOS();
+    const active = downloadAssets[os] || downloadAssets.unknown;
+
+    // Primary auto-detected buttons (Hero CTA, pricing, etc.)
     const downloadBtns = document.querySelectorAll('.js-download-btn');
     downloadBtns.forEach(btn => {
-      btn.href = releasePageUrl;
-      btn.setAttribute('target', '_blank');
-      btn.setAttribute('rel', 'noopener noreferrer');
+      btn.href = active.url;
+      const labelSpan = btn.querySelector('.js-download-label');
+      if (labelSpan) {
+        labelSpan.textContent = active.label;
+      }
     });
+
+    // Platform-specific buttons in the installation section
+    const winBtn = document.querySelector('.js-download-windows');
+    const macBtn = document.querySelector('.js-download-mac');
+    const linuxBtn = document.querySelector('.js-download-linux');
+
+    if (winBtn) winBtn.href = downloadAssets.windows.url;
+    if (macBtn) macBtn.href = downloadAssets.mac.url;
+    if (linuxBtn) linuxBtn.href = downloadAssets.linux.url;
+
+    if (winBtn && macBtn && linuxBtn) {
+      [winBtn, macBtn, linuxBtn].forEach(b => {
+        b.classList.remove('btn-primary');
+        b.classList.add('btn-secondary');
+      });
+      if (os === 'mac') {
+        macBtn.classList.replace('btn-secondary', 'btn-primary');
+      } else if (os === 'linux') {
+        linuxBtn.classList.replace('btn-secondary', 'btn-primary');
+      } else {
+        winBtn.classList.replace('btn-secondary', 'btn-primary');
+      }
+    }
 
     const osBadgeEl = document.querySelector('.js-os-badge');
     if (osBadgeEl) {
-      osBadgeEl.textContent = `Latest Release: ${tag}`;
+      osBadgeEl.innerHTML = `Auto-detected: <strong style="color: var(--c-bone);">${active.subtext}</strong> &bull; Release ${tag} &bull; <a href="#install" style="color: var(--c-primary); text-decoration: underline;">Other platforms</a>`;
     }
   }
 
-  // Initialize with fallback v1.0.0, then fetch latest release info dynamically
-  updateDownloadLinks('v1.0.0', '1.0.0');
+  // Initialize with fallback v1.0.0
+  updateDownloadLinks(DEFAULT_TAG);
 
+  // Dynamically resolve actual latest asset URLs from GitHub Releases API
   fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/releases/latest`)
     .then(response => {
-      if (!response.ok) throw new Error('Network response was not ok');
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
       return response.json();
     })
     .then(data => {
-      if (data && data.tag_name) {
-        const tag = data.tag_name;
-        const version = tag.replace(/^v/, '');
-        updateDownloadLinks(tag, version);
+      if (data && Array.isArray(data.assets) && data.assets.length > 0) {
+        const tag = data.tag_name || DEFAULT_TAG;
+        const exeAsset = data.assets.find(a => a.name.endsWith('.exe') && !a.name.includes('Setup'));
+        const dmgAsset = data.assets.find(a => a.name.endsWith('.dmg'));
+        const debAsset = data.assets.find(a => a.name.endsWith('.deb')) || data.assets.find(a => a.name.endsWith('.AppImage'));
+
+        if (exeAsset) downloadAssets.windows.url = exeAsset.browser_download_url;
+        if (dmgAsset) downloadAssets.mac.url = dmgAsset.browser_download_url;
+        if (debAsset) downloadAssets.linux.url = debAsset.browser_download_url;
+
+        updateDownloadLinks(tag);
       }
     })
     .catch(err => {
