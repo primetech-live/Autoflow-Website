@@ -643,6 +643,24 @@
             <img src="Assets/Dashboard/Dashboard.png" alt="AutoFlow Desktop Interface Dashboard" class="screen-img">
           </div>
 
+          <!-- Early Release & Community Feedback Callout -->
+          <div class="callout warning" style="border-left-color: var(--c-signal); background: rgba(96, 165, 250, 0.05); padding: 18px 22px; border-radius: 4px; margin: 32px 0;">
+            <div class="callout-title" style="color: var(--c-signal); display: flex; align-items: center; gap: 8px; font-weight: 700;">
+              <span>// ENGINEERING NOTE &bull; EARLY RELEASE CANDIDATE</span>
+            </div>
+            <p style="color: var(--c-bone) !important; font-size: 0.925rem !important; margin-top: 8px !important; line-height: 1.65 !important;">
+              <strong>AutoFlow is our debut product.</strong> We engineered it from the ground up to give developers total infrastructure sovereignty with zero vendor lock-in. Because this is an active early release running across diverse VPS distributions and local environments, you might run into unexpected edge cases or glitches. If you encounter any bugs, please bear with us and help us improve by reporting them. Every issue filed directly shapes the next release.
+            </p>
+            <div style="margin-top: 14px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+              <a href="support.html" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.75rem; text-decoration: none; border-color: rgba(96, 165, 250, 0.5); color: var(--c-signal);">
+                Report via Support Console &rarr;
+              </a>
+              <a href="https://github.com/primetech-live/Autoflow-Release/issues" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.75rem; text-decoration: none;">
+                Open Issue on GitHub &rarr;
+              </a>
+            </div>
+          </div>
+
           <div class="callout tip">
             <div class="callout-title">The Agentless Advantage</div>
             <p>Unlike competitors, AutoFlow requires <strong>zero installation</strong> on your target host. It operates agentless: it uses standard SSH tunnels to manage dependencies, coordinate builds, and monitor telemetry. Your server's attack surface stays clean.</p>
@@ -993,8 +1011,8 @@
           <p>AutoFlow implements Time-based One-Time Passwords (TOTP) to authorize local vault decryption queries. The authenticator secret key is encrypted locally using your Master Password.</p>
 
           <div class="callout tip">
-            <div class="callout-title">Recommended Mobile App</div>
-            <p>For generating these validation tokens, we recommend downloading <strong>SafeAuth Authenticator</strong>. You can install it on your mobile device directly from the <strong>Google Play Store</strong> (Android) or the <strong>Apple App Store</strong> (iOS). Standard authenticators like Google Authenticator or Microsoft Authenticator are also fully supported.</p>
+            <div class="callout-title">Universal TOTP App Support (RFC 6238)</div>
+            <p>AutoFlow supports any standard RFC 6238 authenticator application. You can use <strong>Google Authenticator</strong>, <strong>Microsoft Authenticator</strong>, <strong>1Password</strong>, <strong>Bitwarden</strong>, <strong>Authy</strong>, <strong>SafeAuth</strong>, or any TOTP generator available on Google Play or the Apple App Store.</p>
           </div>
           
           <h2>MFA Parameters</h2>
@@ -1642,8 +1660,8 @@
         </div>
         <div style="display: flex; flex-direction: column; gap: 16px;">
           <h4 style="color: var(--c-bone); font-family: var(--f-mono); font-size: 0.85rem; letter-spacing: 0.1em; margin: 0;">SYSTEM</h4>
-          <span style="color: var(--c-slate); font-size: 0.9rem;">v1.2.4-stable</span>
-          <span style="color: var(--c-slate); font-size: 0.9rem;">&copy; 2026</span>
+          <span class="js-footer-version" style="color: var(--c-slate); font-size: 0.9rem;">v1.0.0-stable</span>
+          <span style="color: var(--c-slate); font-size: 0.9rem;">&copy; <span class="js-footer-year">2026</span></span>
         </div>
       </div>
     </div>

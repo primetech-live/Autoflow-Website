@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="AutoFlow Support & Help Center. Get technical assistance, report bugs, or contact our team.">
-  <title>Support | AutoFlow</title>
+  <meta name="description" content="AutoFlow Technical Support &amp; Dispatch Console. Reach engineering directly for setup, Microsoft Store releases, and server connectivity.">
+  <title>Support Console | AutoFlow</title>
   
   <link rel="canonical" href="https://autoflow.primetech.live/support.html">
-  <meta property="og:title" content="Support | AutoFlow - Precision Deployment Orchestrator">
-  <meta property="og:description" content="Get support, report issues, and read technical FAQs for AutoFlow.">
+  <meta property="og:title" content="Support Console | AutoFlow - Precision Deployment">
+  <meta property="og:description" content="Direct technical assistance and ticket dispatch for AutoFlow Desktop &amp; CLI.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://autoflow.primetech.live/support.html">
   <meta property="og:image" content="https://autoflow.primetech.live/Assets/icon-1.png">
@@ -21,149 +21,257 @@
   <link rel="icon" type="image/png" href="Assets/icon-1.png">
 
   <style>
-    .page-header {
-      padding: 120px 0 60px;
-      text-align: center;
+    /* Premium Mission Control Support Console */
+    .support-hero {
+      padding: 100px 0 40px;
       border-bottom: 1px solid var(--c-hairline);
-    }
-    .page-content {
-      padding: 60px 0 100px;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-    .support-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 24px;
-      margin: 40px 0 60px;
-    }
-    .support-card {
-      background: var(--c-panel);
-      border: 1px solid var(--c-hairline);
-      padding: 32px 24px;
-      display: flex;
-      flex-direction: column;
       position: relative;
     }
-    .support-card::before {
-      content: '';
-      position: absolute;
-      top: -1px;
-      left: -1px;
-      width: 8px;
-      height: 8px;
-      border-top: 2px solid var(--c-primary);
-      border-left: 2px solid var(--c-primary);
+    .telemetry-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+      font-family: var(--f-mono);
+      font-size: 0.75rem;
     }
-    .support-card h3 {
-      font-size: 1.25rem;
-      margin-bottom: 12px;
-      color: var(--c-bone);
-    }
-    .support-card p {
-      color: var(--c-slate);
-      font-size: 0.95rem;
-      line-height: 1.6;
-      margin-bottom: 24px;
-      flex-grow: 1;
-    }
-    .faq-item {
+    .telemetry-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(31, 33, 38, 0.8);
       border: 1px solid var(--c-hairline);
-      background: var(--c-panel);
-      padding: 20px 24px;
-      margin-bottom: 16px;
-    }
-    .faq-item h4 {
-      font-size: 1.05rem;
-      color: var(--c-bone);
-      margin-bottom: 8px;
-      font-family: var(--f-heading);
-    }
-    .faq-item p {
+      padding: 4px 12px;
+      border-radius: 4px;
       color: var(--c-slate);
-      font-size: 0.925rem;
-      line-height: 1.6;
-      margin: 0;
+    }
+    .telemetry-pill.live {
+      border-color: rgba(37, 99, 235, 0.4);
+      color: var(--c-bone);
+    }
+    .status-dot-green {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background-color: #10b981;
+      box-shadow: 0 0 8px #10b981;
+    }
+    
+    .console-layout {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 32px;
+      margin-top: 48px;
+      margin-bottom: 80px;
+    }
+    @media (max-width: 900px) {
+      .console-layout {
+        grid-template-columns: 1fr;
+      }
     }
 
-    /* Support Ticket Form */
-    .support-form-wrap {
+    /* Terminal Instrument Panel */
+    .support-terminal-panel {
       background: var(--c-panel);
       border: 1px solid var(--c-hairline);
-      padding: 36px 32px;
-      margin: 40px 0 60px;
       position: relative;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
     }
-    .support-form-wrap::before {
+    .support-terminal-panel::before {
       content: '';
       position: absolute;
       top: -1px;
       left: -1px;
-      width: 12px;
-      height: 12px;
+      width: 14px;
+      height: 14px;
       border-top: 2px solid var(--c-primary);
       border-left: 2px solid var(--c-primary);
     }
+    .terminal-top-bar {
+      padding: 12px 20px;
+      background: rgba(18, 19, 22, 0.9);
+      border-bottom: 1px solid var(--c-hairline);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--f-mono);
+      font-size: 0.75rem;
+    }
+    .terminal-controls {
+      display: flex;
+      gap: 6px;
+    }
+    .terminal-controls span {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #33353c;
+      display: inline-block;
+    }
+    .form-inner {
+      padding: 32px;
+    }
+
     .form-group {
-      margin-bottom: 20px;
+      margin-bottom: 22px;
       display: flex;
       flex-direction: column;
       gap: 8px;
     }
     .form-group label {
       font-family: var(--f-mono);
-      font-size: 0.8rem;
+      font-size: 0.775rem;
       color: var(--c-bone);
       letter-spacing: 0.05em;
       text-transform: uppercase;
+      display: flex;
+      justify-content: space-between;
+    }
+    .form-group label span.hint {
+      color: var(--c-slate);
+      font-weight: normal;
+      text-transform: none;
     }
     .form-control {
-      background: #121316;
+      background: #111215;
       border: 1px solid var(--c-hairline);
       color: var(--c-bone);
-      padding: 12px 14px;
+      padding: 14px 16px;
       font-family: var(--f-body);
       font-size: 0.95rem;
       border-radius: 4px;
       outline: none;
-      transition: border-color 0.2s;
+      transition: all 0.2s ease;
     }
     .form-control:focus {
       border-color: var(--c-primary);
+      background: #14161a;
+      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
     }
     .form-grid-2 {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 20px;
     }
-    @media (max-width: 640px) {
+    @media (max-width: 600px) {
       .form-grid-2 {
         grid-template-columns: 1fr;
       }
     }
-    .form-status {
-      display: none;
-      padding: 14px;
-      margin-top: 16px;
+
+    /* Challenge Box */
+    .captcha-container {
+      background: #111215;
+      border: 1px dashed rgba(96, 165, 250, 0.4);
+      padding: 16px 20px;
       border-radius: 4px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    /* Floating Toast Notification */
+    .toast-notification {
+      position: fixed;
+      top: 96px;
+      right: 24px;
+      z-index: 9999;
+      min-width: 320px;
+      max-width: 440px;
+      background: #17181c;
+      border: 1px solid var(--c-hairline);
+      border-left: 4px solid var(--c-primary);
+      padding: 18px 20px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8);
+      border-radius: 4px;
+      transform: translateX(120%);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .toast-notification.show {
+      transform: translateX(0);
+    }
+    .toast-notification.success {
+      border-left-color: #10b981;
+    }
+    .toast-notification.error {
+      border-left-color: #ef4444;
+    }
+    .toast-title {
       font-family: var(--f-mono);
       font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--c-bone);
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
-    .form-status.success {
-      display: block;
-      background: rgba(16, 185, 129, 0.1);
+    .toast-body {
+      font-size: 0.85rem;
+      color: var(--c-slate);
+      line-height: 1.4;
+    }
+
+    /* Sidebar Channels */
+    .channel-box {
+      background: var(--c-panel);
+      border: 1px solid var(--c-hairline);
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+    .channel-box h4 {
+      font-size: 1rem;
+      margin-bottom: 8px;
+      color: var(--c-bone);
+      font-family: var(--f-heading);
+    }
+    .channel-box p {
+      color: var(--c-slate);
+      font-size: 0.875rem;
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+
+    /* Status indicator in form */
+    .inline-badge {
+      padding: 14px 18px;
+      border-radius: 4px;
+      margin-top: 20px;
+      font-family: var(--f-mono);
+      font-size: 0.85rem;
+      display: none;
+    }
+    .inline-badge.success {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(16, 185, 129, 0.12);
       border: 1px solid #10b981;
       color: #34d399;
     }
-    .form-status.error {
-      display: block;
-      background: rgba(239, 68, 68, 0.1);
+    .inline-badge.error {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(239, 68, 68, 0.12);
       border: 1px solid #ef4444;
       color: #f87171;
     }
   </style>
 </head>
 <body>
+
+  <!-- Toast Notification Overlay -->
+  <div id="toastNotification" class="toast-notification">
+    <div class="toast-title" id="toastTitle">System Notification</div>
+    <div class="toast-body" id="toastBody">Processing...</div>
+  </div>
 
   <!-- Header -->
   <header class="site-header" id="header">
@@ -175,7 +283,7 @@
       <nav class="main-nav">
         <a href="index.html">HOME</a>
         <a href="docs.html">DOCS</a>
-        <a href="support.html" style="color: var(--c-signal);">SUPPORT</a>
+        <a href="support.html" class="active">SUPPORT</a>
       </nav>
       <div class="header-actions">
         <a href="index.html#install" class="btn btn-primary" style="text-transform: uppercase;">Install</a>
@@ -184,144 +292,154 @@
   </header>
 
   <main>
-    <section class="page-header">
+    <!-- Top Hero Telemetry -->
+    <section class="support-hero">
       <div class="container">
-        <div style="font-family: var(--f-mono); font-size: 0.85rem; color: var(--c-signal); margin-bottom: 12px; letter-spacing: 0.1em;">
-          // SYSTEM SUPPORT &amp; INQUIRIES
+        <div class="telemetry-bar">
+          <div class="telemetry-pill live">
+            <span class="status-dot-green"></span>
+            <span>SUPPORT GATEWAY: OPERATIONAL</span>
+          </div>
+          <div class="telemetry-pill">
+            <span>SLA: &lt; 24 HOURS</span>
+          </div>
+          <div class="telemetry-pill">
+            <span>DIRECT INBOX: info@primetech.live</span>
+          </div>
         </div>
-        <h1 style="font-size: 3rem;">AutoFlow Support</h1>
-        <p class="text-slate" style="margin-top: 16px; max-width: 600px; margin-left: auto; margin-right: auto;">
-          Direct technical assistance, troubleshooting, and enterprise support for AutoFlow Desktop &amp; CLI.
+
+        <h1 style="font-size: 3rem; margin-bottom: 12px;">Technical Support Console</h1>
+        <p class="text-slate" style="max-width: 650px; font-size: 1.05rem; line-height: 1.6;">
+          Report software bugs, get assistance with Microsoft Store or desktop setups, or contact our engineering team directly.
         </p>
       </div>
     </section>
 
-    <section class="page-content container">
-      <div class="support-grid">
-        <!-- Direct Email Support -->
-        <div class="support-card">
-          <div style="font-family: var(--f-mono); font-size: 0.75rem; color: var(--c-primary); margin-bottom: 12px;">CHANNEL 01 &bull; EMAIL</div>
-          <h3>Direct Contact</h3>
-          <p>For inquiries, Microsoft Store support, account queries, or partnership requests, email our technical team directly.</p>
-          <a href="mailto:info@primetech.live" class="btn btn-primary" style="text-align: center; text-decoration: none;">
-            info@primetech.live
-          </a>
-        </div>
-
-        <!-- Documentation -->
-        <div class="support-card">
-          <div style="font-family: var(--f-mono); font-size: 0.75rem; color: var(--c-signal); margin-bottom: 12px;">CHANNEL 02 &bull; MANUAL</div>
-          <h3>Documentation</h3>
-          <p>Browse full installation guides, SSH configuration, multi-VPS orchestration specs, and CLI commands.</p>
-          <a href="docs.html" class="btn btn-secondary" style="text-align: center; text-decoration: none;">
-            Open Docs &rarr;
-          </a>
-        </div>
-
-        <!-- Issue Tracker -->
-        <div class="support-card">
-          <div style="font-family: var(--f-mono); font-size: 0.75rem; color: var(--c-slate); margin-bottom: 12px;">CHANNEL 03 &bull; BUG REPORTS</div>
-          <h3>GitHub Issues</h3>
-          <p>Found a bug or need a specific platform feature? Open an issue on our official GitHub repository tracker.</p>
-          <a href="https://github.com/primetech-live/Autoflow-Website/issues" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="text-align: center; text-decoration: none;">
-            Report Bug &rarr;
-          </a>
-        </div>
-      </div>
-
-      <!-- Support Ticket Form Section -->
-      <div class="support-form-wrap">
-        <div style="font-family: var(--f-mono); font-size: 0.75rem; color: var(--c-primary); margin-bottom: 8px;">
-          // DISPATCH INQUIRY &bull; TICKET ROUTER
-        </div>
-        <h2 style="font-size: 1.5rem; margin-bottom: 8px; color: var(--c-bone);">Submit a Support Request</h2>
-        <p style="color: var(--c-slate); font-size: 0.9rem; margin-bottom: 28px;">
-          Send your issue, feedback, or enterprise question directly to our technical team (<span style="color: var(--c-signal);">info@primetech.live</span>).
-        </p>
-
-        <form id="supportForm">
-          <div class="form-grid-2">
-            <div class="form-group">
-              <label for="userName">Your Name</label>
-              <input type="text" id="userName" name="name" class="form-control" placeholder="e.g. Alex Miller" required>
+    <!-- Main Console Grid -->
+    <section class="container">
+      <div class="console-layout">
+        
+        <!-- Left: Instrument Terminal Ticket Form -->
+        <div class="support-terminal-panel">
+          <div class="terminal-top-bar">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <div class="terminal-controls">
+                <span></span><span></span><span></span>
+              </div>
+              <span style="color: var(--c-signal);">autoflow://dispatch-ticket</span>
             </div>
-            <div class="form-group">
-              <label for="userEmail">Email Address</label>
-              <input type="email" id="userEmail" name="email" class="form-control" placeholder="name@company.com" required>
-            </div>
+            <span style="color: var(--c-slate);">SECURE_SSL</span>
           </div>
 
-          <div class="form-grid-2">
-            <div class="form-group">
-              <label for="ticketCategory">Category</label>
-              <select id="ticketCategory" name="category" class="form-control" style="cursor: pointer;">
-                <option value="Microsoft Store / Installation">Microsoft Store / Installation</option>
-                <option value="SSH &amp; Remote Connection">SSH &amp; Remote Connection</option>
-                <option value="Bug Report / Error">Bug Report / Error</option>
-                <option value="Feature Request">Feature Request</option>
-                <option value="Enterprise / Other">Enterprise / Other</option>
-              </select>
+          <form id="supportForm" class="form-inner">
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="userName">Full Name <span class="hint">*Required</span></label>
+                <input type="text" id="userName" name="name" class="form-control" placeholder="e.g. Alex Miller" required>
+              </div>
+              <div class="form-group">
+                <label for="userEmail">Email Address <span class="hint">*Reply destination</span></label>
+                <input type="email" id="userEmail" name="email" class="form-control" placeholder="name@company.com" required>
+              </div>
             </div>
-            <div class="form-group">
-              <label for="platformOS">Operating System</label>
-              <select id="platformOS" name="platform" class="form-control" style="cursor: pointer;">
-                <option value="Windows 11">Windows 11</option>
-                <option value="Windows 10">Windows 10</option>
-                <option value="macOS">macOS</option>
-                <option value="Linux">Linux</option>
-                <option value="CLI Only">CLI Only</option>
-              </select>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="ticketCategory">Query Category</label>
+                <select id="ticketCategory" name="category" class="form-control" style="cursor: pointer;">
+                  <option value="Microsoft Store / Installation">Microsoft Store / Installation</option>
+                  <option value="SSH & Remote Server Connectivity">SSH &amp; Remote Server Connectivity</option>
+                  <option value="2FA & Security Vault">2FA &amp; Security Vault</option>
+                  <option value="Bug Report / Diagnostics">Bug Report / Diagnostics</option>
+                  <option value="Feature Suggestion">Feature Suggestion</option>
+                  <option value="Enterprise / Direct Inquiry">Enterprise / Direct Inquiry</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="platformOS">Environment Platform</label>
+                <select id="platformOS" name="platform" class="form-control" style="cursor: pointer;">
+                  <option value="Windows 11">Windows 11 (64-bit)</option>
+                  <option value="Windows 10">Windows 10 (64-bit)</option>
+                  <option value="macOS (Apple Silicon)">macOS (Apple Silicon M1/M2/M3)</option>
+                  <option value="macOS (Intel)">macOS (Intel x64)</option>
+                  <option value="Linux (Ubuntu/Debian/Fedora)">Linux (AppImage / .deb)</option>
+                  <option value="CLI Only">CLI Node Runtime</option>
+                </select>
+              </div>
             </div>
-          </div>
 
-          <div class="form-group">
-            <label for="ticketSubject">Subject</label>
-            <input type="text" id="ticketSubject" name="subject" class="form-control" placeholder="Brief summary of the issue..." required>
-          </div>
+            <div class="form-group">
+              <label for="ticketSubject">Subject Header <span class="hint">*Brief description</span></label>
+              <input type="text" id="ticketSubject" name="subject" class="form-control" placeholder="e.g. Error configuring port binding during deploy" required>
+            </div>
 
-          <div class="form-group">
-            <label for="ticketMessage">Message Details</label>
-            <textarea id="ticketMessage" name="message" rows="5" class="form-control" placeholder="Describe what happened, error logs, or steps to reproduce..." required></textarea>
-          </div>
+            <div class="form-group">
+              <label for="ticketMessage">Telemetry / Diagnostic Details <span class="hint">*Detailed log or message</span></label>
+              <textarea id="ticketMessage" name="message" rows="6" class="form-control" placeholder="Provide system details, error logs, or questions..." required></textarea>
+            </div>
 
-          <!-- Anti-Spam Security Challenge -->
-          <div class="form-group" style="background: rgba(0,0,0,0.25); border: 1px dashed var(--c-hairline); padding: 14px 16px; border-radius: 4px; margin-bottom: 24px;">
-            <label for="captchaAnswer" style="color: var(--c-signal); display: flex; align-items: center; gap: 8px;">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-              SECURITY CHECK &bull; <span id="captchaQuestion"></span>
-            </label>
-            <div style="display: flex; gap: 12px; align-items: center; margin-top: 6px;">
-              <input type="number" id="captchaAnswer" class="form-control" placeholder="Enter number..." style="max-width: 180px;" required>
-              <button type="button" id="refreshCaptchaBtn" style="background: transparent; border: 1px solid var(--c-hairline); color: var(--c-slate); padding: 10px 12px; cursor: pointer; border-radius: 4px; font-family: var(--f-mono); font-size: 0.75rem;" title="Get new question">
-                &#x21bb; Refresh
+            <!-- Mathematical Security Captcha -->
+            <div class="captcha-container">
+              <div>
+                <div style="font-family: var(--f-mono); font-size: 0.75rem; color: var(--c-signal); margin-bottom: 4px;">
+                  // SECURITY VALIDATION
+                </div>
+                <div style="font-size: 0.9rem; color: var(--c-bone); font-weight: 600;" id="captchaQuestion">
+                  Loading challenge...
+                </div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <input type="number" id="captchaAnswer" class="form-control" placeholder="Answer" style="width: 100px; padding: 8px 12px;" required>
+                <button type="button" id="refreshCaptchaBtn" class="btn btn-secondary" style="padding: 8px 12px; font-size: 0.75rem;" title="Refresh Captcha">
+                  ↻
+                </button>
+              </div>
+            </div>
+
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+              <button type="submit" id="submitBtn" class="btn btn-primary" style="padding: 14px 32px; font-weight: 600; cursor: pointer; border: none;">
+                DISPATCH TO ENGINEERING &rarr;
               </button>
+              <span style="font-family: var(--f-mono); font-size: 0.75rem; color: var(--c-slate);">
+                Destination: info@primetech.live
+              </span>
             </div>
+
+            <!-- Inline Notification Confirmation Badge -->
+            <div id="inlineStatus" class="inline-badge"></div>
+          </form>
+        </div>
+
+        <!-- Right: Official Channels & Info -->
+        <aside>
+          <div class="channel-box">
+            <span style="font-family: var(--f-mono); font-size: 0.7rem; color: var(--c-primary); letter-spacing: 0.08em;">CHANNEL 01</span>
+            <h4>Direct Engineering Inbox</h4>
+            <p>Direct communication with the maintainers for partnership, licensing, or urgent inquiries.</p>
+            <a href="mailto:info@primetech.live" class="btn btn-secondary" style="display: block; text-align: center; text-decoration: none;">
+              info@primetech.live
+            </a>
           </div>
 
-          <button type="submit" id="submitBtn" class="btn btn-primary" style="padding: 12px 28px; cursor: pointer; border: none; font-family: var(--f-sans); font-weight: 600;">
-            DISPATCH MESSAGE &rarr;
-          </button>
+          <div class="channel-box">
+            <span style="font-family: var(--f-mono); font-size: 0.7rem; color: var(--c-signal); letter-spacing: 0.08em;">CHANNEL 02</span>
+            <h4>GitHub Repository Tracker</h4>
+            <p>Track open pull requests, public releases, and open source bug tickets.</p>
+            <a href="https://github.com/primetech-live/Autoflow-Release/issues" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="display: block; text-align: center; text-decoration: none;">
+              Open GitHub Issues &rarr;
+            </a>
+          </div>
 
-          <div id="formStatus" class="form-status"></div>
-        </form>
-      </div>
+          <div class="channel-box">
+            <span style="font-family: var(--f-mono); font-size: 0.7rem; color: var(--c-bone); letter-spacing: 0.08em;">CHANNEL 03</span>
+            <h4>Documentation Portal</h4>
+            <p>Comprehensive setup guides for multi-VPS orchestration, SSH key pairs, and zero-downtime rolling updates.</p>
+            <a href="docs.html" class="btn btn-secondary" style="display: block; text-align: center; text-decoration: none;">
+              Read Manual &rarr;
+            </a>
+          </div>
+        </aside>
 
-      <!-- FAQ Section -->
-      <h2 style="font-size: 1.75rem; margin-bottom: 24px;">Common Troubleshooting</h2>
-      
-      <div class="faq-item">
-        <h4>Windows / Microsoft Store Installation</h4>
-        <p>Ensure your system has 64-bit Windows 10/11. AutoFlow requires SSH client capabilities (enabled by default on modern Windows). If you encounter permission prompts, grant the local network permission for local SSH tunneling.</p>
-      </div>
-
-      <div class="faq-item">
-        <h4>Does AutoFlow send my private keys to the cloud?</h4>
-        <p>No. AutoFlow is 100% local-first. Your private keys never leave your device. All SSH connections and file synchronizations occur directly between your computer and your target VPS.</p>
-      </div>
-
-      <div class="faq-item">
-        <h4>Need custom enterprise support or private SLA?</h4>
-        <p>Reach out to us at <a href="mailto:info@primetech.live" style="color: var(--c-signal); text-decoration: underline;">info@primetech.live</a> with your requirements.</p>
       </div>
     </section>
   </main>
@@ -352,8 +470,8 @@
         </div>
         <div style="display: flex; flex-direction: column; gap: 16px;">
           <h4 style="color: var(--c-bone); font-family: var(--f-mono); font-size: 0.85rem; letter-spacing: 0.1em; margin: 0;">SYSTEM</h4>
-          <span style="color: var(--c-slate); font-size: 0.9rem;">v1.2.4-stable</span>
-          <span style="color: var(--c-slate); font-size: 0.9rem;">&copy; 2026</span>
+          <span class="js-footer-version" style="color: var(--c-slate); font-size: 0.9rem;">v1.0.0-stable</span>
+          <span style="color: var(--c-slate); font-size: 0.9rem;">&copy; <span class="js-footer-year">2026</span></span>
         </div>
       </div>
     </div>
@@ -380,15 +498,27 @@
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
     </button>
   </div>
+
   <script src="main.js"></script>
   <script>
-    // Support Form Handler
-    const supportForm = document.getElementById('supportForm');
-    const formStatus = document.getElementById('formStatus');
-    const submitBtn = document.getElementById('submitBtn');
-
     // Formspree Production Endpoint
     const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mdeajwbw'; 
+
+    // Toast Notification System
+    const toast = document.getElementById('toastNotification');
+    const toastTitle = document.getElementById('toastTitle');
+    const toastBody = document.getElementById('toastBody');
+    let toastTimer = null;
+
+    function showToast(type, title, message) {
+      if (toastTimer) clearTimeout(toastTimer);
+      toast.className = `toast-notification ${type} show`;
+      toastTitle.textContent = title;
+      toastBody.textContent = message;
+      toastTimer = setTimeout(() => {
+        toast.classList.remove('show');
+      }, 6000);
+    }
 
     // Mathematical Anti-Spam Captcha
     let captchaNum1 = 0;
@@ -403,21 +533,28 @@
       captchaNum1 = Math.floor(Math.random() * 9) + 1;
       captchaNum2 = Math.floor(Math.random() * 9) + 1;
       captchaCorrectAnswer = captchaNum1 + captchaNum2;
-      captchaQuestionEl.textContent = `What is ${captchaNum1} + ${captchaNum2}?`;
+      captchaQuestionEl.textContent = `Security Check: Calculate ${captchaNum1} + ${captchaNum2}`;
       captchaAnswerEl.value = '';
     }
 
     refreshCaptchaBtn.addEventListener('click', generateCaptcha);
     generateCaptcha();
 
+    // Form Submission Handler
+    const supportForm = document.getElementById('supportForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const inlineStatus = document.getElementById('inlineStatus');
+
     supportForm.addEventListener('submit', async function(e) {
       e.preventDefault();
 
-      // Validate Captcha
+      // Captcha verification
       const userAnswer = parseInt(captchaAnswerEl.value.trim(), 10);
       if (userAnswer !== captchaCorrectAnswer) {
-        formStatus.className = 'form-status error';
-        formStatus.textContent = '! Incorrect security answer. Please solve the calculation again.';
+        showToast('error', 'Security Verification Failed', 'Incorrect calculation result. Please try the new security math problem.');
+        inlineStatus.className = 'inline-badge error';
+        inlineStatus.innerHTML = '<span>✕</span> <span>Incorrect security answer. Please solve the calculation again.</span>';
+        inlineStatus.style.display = 'flex';
         generateCaptcha();
         return;
       }
@@ -430,45 +567,43 @@
       const message = document.getElementById('ticketMessage').value.trim();
 
       submitBtn.disabled = true;
-      submitBtn.textContent = 'DISPATCHING...';
-      formStatus.className = 'form-status';
-      formStatus.style.display = 'none';
+      submitBtn.textContent = 'DISPATCHING TICKET...';
+      inlineStatus.style.display = 'none';
 
-      // If Formspree endpoint configured, use seamless AJAX
-      if (FORMSPREE_ENDPOINT && FORMSPREE_ENDPOINT.startsWith('http')) {
-        try {
-          const res = await fetch(FORMSPREE_ENDPOINT, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-            },
-            body: JSON.stringify({
-              name,
-              email,
-              category,
-              platform,
-              subject,
-              message
-            })
-          });
+      try {
+        const response = await fetch(FORMSPREE_ENDPOINT, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            name,
+            email,
+            category,
+            platform,
+            subject,
+            message
+          })
+        });
 
-          if (res.ok) {
-            formStatus.className = 'form-status success';
-            formStatus.textContent = '✓ Message dispatched successfully! Our team will reply to ' + email + ' shortly.';
-            supportForm.reset();
-          } else {
-            throw new Error('Server response not OK');
-          }
-        } catch (err) {
-          formStatus.className = 'form-status error';
-          formStatus.textContent = '! Failed to dispatch automatically. Please email info@primetech.live directly.';
-        } finally {
-          submitBtn.disabled = false;
-          submitBtn.textContent = 'DISPATCH MESSAGE →';
+        if (response.ok) {
+          showToast('success', 'Ticket Dispatched Successfully', `Thank you ${name}. Your inquiry has been forwarded to info@primetech.live. A confirmation email has been dispatched.`);
+          inlineStatus.className = 'inline-badge success';
+          inlineStatus.innerHTML = `<span>✓</span> <span>Message dispatched successfully! Engineering team will respond to <strong>${email}</strong> within 24 hours.</span>`;
+          inlineStatus.style.display = 'flex';
+          supportForm.reset();
+          generateCaptcha();
+        } else {
+          throw new Error('HTTP ' + response.status);
         }
-      } else {
-        // Fallback: Opens pre-filled native mail client to info@primetech.live
+      } catch (err) {
+        showToast('error', 'Direct Dispatch Failure', 'Unable to reach the webhook automatically. Opening your email client to send directly...');
+        inlineStatus.className = 'inline-badge error';
+        inlineStatus.innerHTML = '<span>!</span> <span>Automatic webhook failed. Opening default email client to send to info@primetech.live...</span>';
+        inlineStatus.style.display = 'flex';
+
+        // Native client fallback
         const mailtoSubject = encodeURIComponent(`[AutoFlow Support] ${category} - ${subject}`);
         const mailtoBody = encodeURIComponent(
           `Name: ${name}\n` +
@@ -478,11 +613,9 @@
           `Message:\n${message}\n`
         );
         window.location.href = `mailto:info@primetech.live?subject=${mailtoSubject}&body=${mailtoBody}`;
-        
-        formStatus.className = 'form-status success';
-        formStatus.textContent = '✓ Opening your email client to send to info@primetech.live...';
+      } finally {
         submitBtn.disabled = false;
-        submitBtn.textContent = 'DISPATCH MESSAGE →';
+        submitBtn.textContent = 'DISPATCH TO ENGINEERING →';
       }
     });
   </script>

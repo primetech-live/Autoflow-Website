@@ -217,11 +217,23 @@ document.addEventListener('DOMContentLoaded', () => {
         if (debAsset) downloadAssets.linux.url = debAsset.browser_download_url;
 
         updateDownloadLinks(tag);
+
+        // Update footer version dynamically across any page
+        const footerVersionEls = document.querySelectorAll('.js-footer-version');
+        footerVersionEls.forEach(el => {
+          el.textContent = `${tag}-stable`;
+        });
       }
     })
     .catch(err => {
       console.warn('Could not fetch latest release info, using fallback v1.0.0:', err);
     });
+
+  // Dynamic copyright year and initial footer version
+  const footerYearEls = document.querySelectorAll('.js-footer-year');
+  footerYearEls.forEach(el => {
+    el.textContent = new Date().getFullYear();
+  });
 
   const sloganEl = document.querySelector('.hero-slogan');
   if (sloganEl) {

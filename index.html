@@ -48,6 +48,14 @@
     <div class="container hero-inner">
       <div class="hero-content">
         
+        <!-- Live Release Notification Pill Badge -->
+        <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(37, 99, 235, 0.1); border: 1px solid rgba(37, 99, 235, 0.35); padding: 6px 14px; border-radius: 24px; margin-bottom: 24px;">
+          <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: var(--c-signal); box-shadow: 0 0 10px var(--c-signal); animation: pulse 2s infinite;"></span>
+          <span style="font-family: var(--f-mono); font-size: 0.75rem; color: var(--c-signal); font-weight: 600; letter-spacing: 0.05em;">SYSTEM v1.2.4 LIVE</span>
+          <span style="color: var(--c-hairline);">|</span>
+          <span style="font-family: var(--f-mono); font-size: 0.75rem; color: var(--c-bone);">Coming soon to Microsoft Store</span>
+        </div>
+
         <h1 class="hero-slogan" style="margin-bottom: 24px; font-size: 4.5rem; line-height: 1.1;"></h1>
         
         <p class="hero-description" style="font-size: 1.125rem; color: var(--c-slate); margin-bottom: 48px; max-width: 90%; line-height: 1.6;">
@@ -479,10 +487,16 @@ Commands:
     <div class="container">
       <div class="section-header center">
         <span class="section-label font-mono">04.5 // Security</span>
-        <h2>Decoupled Local Vault.</h2>
+        <h2>Decoupled Local Vault &amp; Universal 2FA.</h2>
         <p class="text-slate" style="max-width: 800px; margin: 16px auto 0;">
-          All SSH keys, deployment tokens, and environment variables are heavily encrypted (AES-256-GCM) and stored locally on your hard drive. There is no central point of failure. Your credentials are never exposed to the public internet or stored on third-party servers. You own your infrastructure absolutely.
+          All SSH keys, deployment tokens, and environment variables are heavily encrypted (AES-256-GCM) and stored locally on your hard drive. Protected with industry-standard <strong>TOTP 2FA (RFC 6238)</strong> — compatible with Google Authenticator, Microsoft Authenticator, 1Password, Authy, SafeAuth, or any standard authenticator app.
         </p>
+        <div style="display: flex; justify-content: center; gap: 12px; margin-top: 20px; flex-wrap: wrap;">
+          <span style="font-family: var(--f-mono); font-size: 0.75rem; background: var(--c-panel); border: 1px solid var(--c-hairline); padding: 6px 14px; border-radius: 20px; color: var(--c-signal);">✓ Google Authenticator</span>
+          <span style="font-family: var(--f-mono); font-size: 0.75rem; background: var(--c-panel); border: 1px solid var(--c-hairline); padding: 6px 14px; border-radius: 20px; color: var(--c-signal);">✓ Microsoft Authenticator</span>
+          <span style="font-family: var(--f-mono); font-size: 0.75rem; background: var(--c-panel); border: 1px solid var(--c-hairline); padding: 6px 14px; border-radius: 20px; color: var(--c-signal);">✓ 1Password / Bitwarden</span>
+          <span style="font-family: var(--f-mono); font-size: 0.75rem; background: var(--c-panel); border: 1px solid var(--c-hairline); padding: 6px 14px; border-radius: 20px; color: var(--c-bone);">✓ Any RFC 6238 TOTP App</span>
+        </div>
       </div>
       
       <div class="two-surfaces" style="position: relative; height: auto; padding-bottom: 60px; margin-top: 48px;">
@@ -504,8 +518,8 @@ Commands:
           <!-- Phone Notch -->
           <div style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 100px; height: 20px; background: var(--c-panel); border-bottom-left-radius: 12px; border-bottom-right-radius: 12px; z-index: 10;"></div>
           
-          <!-- SafeAuth Image -->
-          <img src="./Assets/Onboarding/safeAuth.png" alt="SafeAuth OTP" style="width: 100%; height: auto; display: block; border-radius: 24px;">
+          <!-- TOTP OTP Image -->
+          <img src="./Assets/Onboarding/safeAuth.png" alt="TOTP Authenticator 2FA" style="width: 100%; height: auto; display: block; border-radius: 24px;">
         </div>
       </div>
     </div>
@@ -615,59 +629,11 @@ Commands:
     </div>
   </section>
 
-  <!-- Section 9: Pricing -->
-  <section class="pricing section-divider" id="pricing">
-    <div class="container">
-      <div class="section-header center">
-        <span class="section-label font-mono">06 // Pricing</span>
-        <h2>Engineered for teams of all sizes.</h2>
-      </div>
-      
-      <div class="pricing-grid">
-        <div class="pricing-card instrument-panel">
-          <h3>Free</h3>
-          <div class="price font-mono">$0<span class="text-slate">/mo</span></div>
-          <ul class="pricing-features">
-            <li>Unlimited local deployments</li>
-            <li>1 Remote server</li>
-            <li>Community support</li>
-          </ul>
-          <a href="#" class="btn btn-secondary w-full">Start Free</a>
-        </div>
-        
-        <div class="pricing-card instrument-panel active-tier">
-          <div class="tier-badge font-mono text-primary">Popular</div>
-          <h3>Pro</h3>
-          <div class="price font-mono">$15<span class="text-slate">/mo</span></div>
-          <ul class="pricing-features">
-            <li>Unlimited deployments</li>
-            <li>Unlimited remote servers</li>
-            <li>Vault secret management</li>
-            <li>Priority support</li>
-          </ul>
-          <a href="#" class="btn btn-primary w-full">Upgrade to Pro</a>
-        </div>
-        
-        <div class="pricing-card instrument-panel disabled">
-          <h3>Enterprise</h3>
-          <div class="price font-mono">Custom</div>
-          <ul class="pricing-features">
-            <li>SSO & SAML</li>
-            <li>Self-hosted control plane</li>
-            <li>Dedicated success manager</li>
-            <li>Custom SLAs</li>
-          </ul>
-          <button class="btn btn-secondary w-full" disabled>Coming Soon</button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Section 10: FAQ -->
+  <!-- Section 9: FAQ -->
   <section class="faq section-divider" id="faq">
     <div class="container faq-container">
       <div class="section-header">
-        <span class="section-label font-mono">07 // Knowledge Base</span>
+        <span class="section-label font-mono">06 // Knowledge Base</span>
         <h2>Frequently Asked Questions.</h2>
       </div>
       
@@ -753,8 +719,8 @@ Commands:
         <!-- System -->
         <div style="display: flex; flex-direction: column; gap: 16px;">
           <h4 style="color: var(--c-bone); font-family: var(--f-mono); font-size: 0.85rem; letter-spacing: 0.1em; margin: 0;">SYSTEM</h4>
-          <span style="color: var(--c-slate); font-size: 0.9rem;">v1.2.4-stable</span>
-          <span style="color: var(--c-slate); font-size: 0.9rem;">&copy; 2026</span>
+          <span class="js-footer-version" style="color: var(--c-slate); font-size: 0.9rem;">v1.0.0-stable</span>
+          <span style="color: var(--c-slate); font-size: 0.9rem;">&copy; <span class="js-footer-year">2026</span></span>
         </div>
       </div>
     </div>
