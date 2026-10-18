@@ -3,9 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="AutoFlow - Premium Developer Documentation Portal. Local-first, agentless PaaS orchestrator.">
-  <title>Documentation | AutoFlow</title>
+  <meta name="description" content="AutoFlow Technical Documentation. Learn agentless SSH deployments, multi-project container orchestration, zero-downtime rolling updates, and security vault specs.">
+  <title>Documentation | AutoFlow - Local-First Deployment Engine</title>
   
+  <link rel="canonical" href="https://autoflow.primetech.live/docs.html">
+  <meta property="og:title" content="Documentation | AutoFlow">
+  <meta property="og:description" content="Complete manual and technical specifications for AutoFlow Desktop &amp; CLI.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://autoflow.primetech.live/docs.html">
+  <meta property="og:image" content="https://autoflow.primetech.live/Assets/icon-1.png">
+  <meta name="twitter:card" content="summary">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -519,22 +527,37 @@
     }
   </style>
   <link rel="icon" type="image/png" href="Assets/icon-1.png">
+
+  <!-- JSON-LD TechArticle Structured Data for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "AutoFlow Technical Documentation",
+    "description": "Agentless SSH deployment orchestration, multi-project container management, and local encryption specifications.",
+    "url": "https://autoflow.primetech.live/docs.html",
+    "author": {
+      "@type": "Organization",
+      "name": "PrimeTech Digital Solutions"
+    }
+  }
+  </script>
 </head>
 <body>
   <!-- Header -->
   <header class="site-header" id="header">
     <div class="container header-inner">
-      <a href="index.html" class="logo">
+      <a href="/" class="logo">
         <img src="Assets/icon-1.png" alt="AutoFlow Icon" class="logo-img">
         <span class="logo-text">AutoFlow</span>
       </a>
       <nav class="main-nav">
-        <a href="index.html">HOME</a>
+        <a href="/">HOME</a>
         <a href="docs.html" class="active">DOCS</a>
         <a href="support.html">SUPPORT</a>
       </nav>
       <div class="header-actions">
-        <a href="index.html#install" class="btn btn-primary" style="text-transform: uppercase;">Install</a>
+        <a href="/#install" class="btn btn-primary" style="text-transform: uppercase;">Install</a>
       </div>
     </div>
   </header>
@@ -618,7 +641,6 @@
           <ul class="nav-list-items">
             <li><a data-target="#cli" class="nav-link-btn">CLI Commands</a></li>
             <li><a data-target="#troubleshooting" class="nav-link-btn">Troubleshooting</a></li>
-            <li><a data-target="#faq" class="nav-link-btn">FAQ</a></li>
           </ul>
         </div>
       </nav>
@@ -1585,34 +1607,6 @@
             <a data-link="#cli" class="nav-link">
               <span class="nav-label">Previous</span>
               <span class="nav-title">CLI Commands</span>
-            </a>
-            <a data-link="#faq" class="nav-link next">
-              <span class="nav-label">Next</span>
-              <span class="nav-title">FAQ</span>
-            </a>
-          </div>
-        </section>
-
-        <!-- SECTION: FAQ -->
-        <section class="docs-section" id="faq">
-          <h1>Frequently Asked Questions</h1>
-          
-          <h3>Can I host multiple projects on a single VPS?</h3>
-          <p>Yes. AutoFlow automatically configures Nginx's reverse proxy rules to map unique domains to distinct internal container ports, allowing you to host multiple websites on a single server.</p>
-
-          <h3>Where is my configuration vault stored?</h3>
-          <p>Your encrypted credentials vault is stored locally in your user profile folder at <code>~/.autoflow/vault.json</code>. It is never uploaded to any cloud database.</p>
-
-          <h3>Does AutoFlow support custom branch deployments?</h3>
-          <p>Yes. You can edit the <code>branch</code> value in your project's <code>autoflow.config.json</code> file to deploy code from branches other than `main` (e.g. `staging` or `develop`).</p>
-
-          <h3>How does AutoFlow charge for plans?</h3>
-          <p>AutoFlow dynamically checks plan limits (e.g., project count limits) on startup by querying your active Supabase session. Actual code deployments do not require any cloud transactions and run directly over SSH.</p>
-
-          <div class="nav-links">
-            <a data-link="#troubleshooting" class="nav-link">
-              <span class="nav-label">Previous</span>
-              <span class="nav-title">Troubleshooting</span>
             </a>
             <span></span>
           </div>

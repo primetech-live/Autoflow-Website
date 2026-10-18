@@ -1,18 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // 1. FAQ Accordion Logic
+  // 1. FAQ Accordion Logic (if present)
   const faqItems = document.querySelectorAll('.faq-item');
-  
-  faqItems.forEach(item => {
-    const button = item.querySelector('.faq-question');
-    button.addEventListener('click', () => {
-      const isOpen = item.classList.contains('open');
-      if (!isOpen) {
-        item.classList.add('open');
-      } else {
-        item.classList.remove('open');
+  if (faqItems.length > 0) {
+    faqItems.forEach(item => {
+      const button = item.querySelector('.faq-question');
+      if (button) {
+        button.addEventListener('click', () => {
+          item.classList.toggle('open');
+        });
       }
     });
-  });
+  }
 
   // 2. Copy to Clipboard for CLI command
   const copyBtn = document.querySelector('.copy-btn');
@@ -229,21 +227,50 @@ document.addEventListener('DOMContentLoaded', () => {
       console.warn('Could not fetch latest release info, using fallback v1.0.0:', err);
     });
 
-  // Dynamic copyright year and initial footer version
-  const footerYearEls = document.querySelectorAll('.js-footer-year');
-  footerYearEls.forEach(el => {
-    el.textContent = new Date().getFullYear();
-  });
+  // Smooth Typing Loop without Layout Shift
+  const sloganTextEl = document.querySelector('.hero-slogan-text');
+  if (sloganTextEl) {
+    const phrases = [
+      'Deploy with Precision.',
+      'Deploy to your servers.',
+      'Zero cloud lock-in.'
+    ];
+    let phraseIdx = 0;
+    let charIdx = phrases[0].length;
+    let isDeleting = false;
 
-  const sloganEl = document.querySelector('.hero-slogan');
-  if (sloganEl) {
-    const sloganText = 'Deploy with Precision.';
-    sloganEl.textContent = '';
-    let i = 0;
-    const interval = setInterval(() => {
-      sloganEl.textContent += sloganText.charAt(i);
-      i++;
-      if (i >= sloganText.length) clearInterval(interval);
-    }, 80);
+    function typeLoop() {
+      const currentPhrase = phrases[phraseIdx];
+
+      if (isDeleting) {
+        charIdx--;
+        sloganTextEl.textContent = currentPhrase.substring(0, charIdx);
+      } else {
+        charIdx++;
+        sloganTextEl.textContent = currentPhrase.substring(0, charIdx);
+      }
+
+      let speed = isDeleting ? 45 : 85;
+
+      if (!isDeleting && charIdx === currentPhrase.length) {
+        // Pause at full word
+        speed = 2800;
+        isDeleting = true;
+      } else if (isDeleting && charIdx === 0) {
+        isDeleting = false;
+        phraseIdx = (phraseIdx + 1) % phrases.length;
+        speed = 500;
+      }
+
+      setTimeout(typeLoop, speed);
+    }
+
+    // Initial wait before starting first erase
+    setTimeout(() => {
+      isDeleting = true;
+      typeLoop();
+    }, 3000);
   }
 });
+
+
