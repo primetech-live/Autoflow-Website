@@ -14,11 +14,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 2. Copy to Clipboard for CLI section
+  // 2. Copy to Clipboard for CLI command
   const copyBtn = document.querySelector('.copy-btn');
   if (copyBtn) {
     copyBtn.addEventListener('click', () => {
-      const commandText = 'npm install -g autoflow-cli';
+      const commandText = 'autoflow deploy';
       navigator.clipboard.writeText(commandText).then(() => {
         const originalHTML = copyBtn.innerHTML;
         copyBtn.innerHTML = '<span class="text-signal" style="font-size:12px;font-family:var(--f-mono)">Copied!</span>';
