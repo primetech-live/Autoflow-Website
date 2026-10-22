@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="404 Page Not Found - AutoFlow Local-First Deployment Engine.">
+  <meta name="robots" content="noindex, follow">
+  <title>404 - Signal Lost | AutoFlow</title>
+  
+  <link rel="canonical" href="https://autoflow.primetech.live/404.html">
+  <meta property="og:site_name" content="AutoFlow">
+  <meta property="og:title" content="404 - Page Not Found | AutoFlow">
+  <meta property="og:description" content="The requested deployment endpoint could not be found. Return to base mission control.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://autoflow.primetech.live/Assets/icon-1.png">
+  <meta name="theme-color" content="#17181c">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/png" href="Assets/icon-1.png">
+
+  <style>
+    .error-wrapper {
+      min-height: calc(100vh - 80px - 260px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 24px;
+      text-align: center;
+    }
+    .error-card {
+      max-width: 640px;
+      width: 100%;
+      background: var(--c-surface, #1f2126);
+      border: 1px solid var(--c-hairline, rgba(255, 255, 255, 0.08));
+      border-radius: 8px;
+      padding: 56px 40px;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+      position: relative;
+      overflow: hidden;
+    }
+    .error-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #ef4444, #2563eb, #3b82f6);
+    }
+    .error-code {
+      font-family: var(--f-mono, monospace);
+      font-size: 5rem;
+      font-weight: 700;
+      line-height: 1;
+      color: #ef4444;
+      letter-spacing: -0.05em;
+      margin-bottom: 12px;
+    }
+    .error-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--f-mono, monospace);
+      font-size: 0.75rem;
+      color: var(--c-slate, #94a3b8);
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      padding: 4px 12px;
+      border-radius: 4px;
+      margin-bottom: 24px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .error-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #ef4444;
+      box-shadow: 0 0 6px #ef4444;
+    }
+    .error-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--c-bone, #f8fafc);
+      margin-bottom: 16px;
+    }
+    .error-desc {
+      color: var(--c-slate, #94a3b8);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 36px;
+    }
+    .error-nav-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header" id="header">
+    <div class="container header-inner">
+      <a href="/" class="logo">
+        <img src="Assets/icon-1.png" alt="AutoFlow Icon" class="logo-img">
+        <span class="logo-text">AutoFlow</span>
+      </a>
+      <nav class="main-nav">
+        <a href="/">HOME</a>
+        <a href="docs.html">DOCS</a>
+        <a href="support.html">SUPPORT</a>
+      </nav>
+      <div class="header-actions">
+        <a href="/#install" class="btn btn-primary" style="text-transform: uppercase;">Install</a>
+      </div>
+      <button class="mobile-nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+    <div class="mobile-nav-drawer" id="mobileNavDrawer404">
+      <a href="/">HOME</a>
+      <a href="docs.html">DOCS</a>
+      <a href="support.html">SUPPORT</a>
+      <div class="drawer-cta">
+        <a href="/#install" class="btn btn-primary" style="text-align: center; text-transform: uppercase;">Install AutoFlow</a>
+        <a href="https://apps.microsoft.com/detail/9N9064GN25F1" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="text-align: center;">Microsoft Store</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="error-wrapper">
+    <div class="error-card">
+      <div class="error-code">404</div>
+      <div class="error-status">
+        <span class="error-dot"></span>
+        HTTP 404 &bull; SIGNAL_LOST &bull; NO_ROUTE_MATCH
+      </div>
+      <h1 class="error-title">Target Host Or Route Not Found</h1>
+      <p class="error-desc">
+        The requested path does not exist on this server cluster. The link may be broken, or the orchestrator route has been decommissioned.
+      </p>
+      <div class="error-nav-grid">
+        <a href="/" class="btn btn-primary">RETURN TO HOME</a>
+        <a href="docs.html" class="btn btn-secondary">VIEW DOCS</a>
+        <a href="support.html" class="btn btn-secondary">CONTACT SUPPORT</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer" style="border-top: 1px solid var(--c-hairline);">
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center; padding: 32px 24px; font-size: 0.85rem; color: var(--c-slate); flex-wrap: wrap; gap: 16px;">
+      <div>&copy; 2026 PrimeTech Digital Solutions. All rights reserved.</div>
+      <div style="display: flex; gap: 20px;">
+        <a href="/" class="footer-link">Home</a>
+        <a href="docs.html" class="footer-link">Docs</a>
+        <a href="support.html" class="footer-link">Support</a>
+        <a href="privacy.html" class="footer-link">Privacy</a>
+        <a href="terms.html" class="footer-link">Terms</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="AutoFlow - A local-first deployment orchestrator for developers. Deploy directly to your VPS with precision and zero cloud lock-in."
+      content="AutoFlow - Precision local-first deployment orchestrator for developers. Deploy directly to your VPS with agentless SSH, minimal downtime, and zero cloud lock-in."
     />
     <title>AutoFlow | Precision Deployment Orchestrator</title>
 
     <link rel="canonical" href="https://autoflow.primetech.live/" />
+    <meta property="og:site_name" content="AutoFlow" />
     <meta
       property="og:title"
       content="AutoFlow | Precision Deployment Orchestrator"
@@ -24,7 +25,15 @@
       property="og:image"
       content="https://autoflow.primetech.live/Assets/icon-1.png"
     />
+    <meta property="og:image:alt" content="AutoFlow Application Logo" />
     <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="AutoFlow | Precision Deployment Orchestrator" />
+    <meta
+      name="twitter:description"
+      content="Local-first deployment engine. Direct SSH orchestration, zero cloud lock-in."
+    />
+    <meta name="twitter:image" content="https://autoflow.primetech.live/Assets/icon-1.png" />
+    <meta name="theme-color" content="#17181c" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -35,28 +44,81 @@
     />
 
     <link rel="stylesheet" href="styles.css" />
-
     <link rel="icon" type="image/png" href="Assets/icon-1.png" />
+
+    <!-- Structured Data: SoftwareApplication & Organization -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://autoflow.primetech.live/#organization",
+          "name": "PrimeTech Digital Solutions",
+          "url": "https://autoflow.primetech.live/",
+          "logo": "https://autoflow.primetech.live/Assets/icon-1.png"
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://autoflow.primetech.live/#website",
+          "url": "https://autoflow.primetech.live/",
+          "name": "AutoFlow",
+          "publisher": { "@id": "https://autoflow.primetech.live/#organization" }
+        },
+        {
+          "@type": "SoftwareApplication",
+          "@id": "https://autoflow.primetech.live/#application",
+          "name": "AutoFlow (Autoflow-vNext)",
+          "operatingSystem": "Windows 10, Windows 11, macOS, Linux",
+          "applicationCategory": "DeveloperApplication",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          },
+          "publisher": { "@id": "https://autoflow.primetech.live/#organization" },
+          "downloadUrl": "https://apps.microsoft.com/detail/9N9064GN25F1",
+          "description": "Local-first deployment orchestrator for developers. Deploy directly to your VPS with SSH precision and zero cloud lock-in."
+        }
+      ]
+    }
+    </script>
   </head>
   <body>
     <header class="site-header" id="header">
       <div class="container header-inner">
-        <a href="index.html" class="logo">
+        <a href="/" class="logo">
           <img src="Assets/icon-1.png" alt="AutoFlow Icon" class="logo-img" />
           <span class="logo-text">AutoFlow</span>
         </a>
         <nav class="main-nav">
-          <a href="index.html">HOME</a>
+          <a href="/" class="active">HOME</a>
           <a href="docs.html">DOCS</a>
           <a href="support.html">SUPPORT</a>
         </nav>
         <div class="header-actions">
           <a
-            href="index.html#install"
+            href="#install"
             class="btn btn-primary"
             style="text-transform: uppercase"
             >Install</a
           >
+        </div>
+        <button class="mobile-nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="mobile-nav-drawer" id="mobileNavDrawer">
+        <a href="/" class="active">HOME</a>
+        <a href="docs.html">DOCS</a>
+        <a href="support.html">SUPPORT</a>
+        <div class="drawer-cta">
+          <a href="#install" class="btn btn-primary" style="text-align: center; text-transform: uppercase;">Install AutoFlow</a>
+          <a href="https://apps.microsoft.com/detail/9N9064GN25F1" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="text-align: center;">Microsoft Store</a>
         </div>
       </div>
     </header>
@@ -65,19 +127,19 @@
     <section class="hero" id="hero">
       <div class="hero-bg-vignette"></div>
       <div class="container hero-inner">
-        <div class="hero-content">
+        <div class="hero-content" style="min-width: 0; width: 100%;">
           <h1
             class="hero-slogan"
-            style="margin-bottom: 24px; font-size: 4.5rem; line-height: 1.1; min-height: 2.2em;"
+            style="margin-bottom: 20px; font-size: clamp(2rem, 3.2vw, 3.25rem); line-height: 1.15; min-height: 1.25em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
           ><span class="hero-slogan-text">Deploy with Precision.</span><span class="hero-cursor" style="display: inline-block; width: 4px; height: 0.85em; background: var(--c-primary); vertical-align: -0.05em; margin-left: 6px; animation: blink 1s step-end infinite;"></span></h1>
 
           <p
             class="hero-description"
             style="
-              font-size: 1.125rem;
+              font-size: 1.05rem;
               color: var(--c-slate);
-              margin-bottom: 48px;
-              max-width: 90%;
+              margin-bottom: 32px;
+              max-width: 95%;
               line-height: 1.6;
             "
           >
@@ -88,12 +150,12 @@
 
           <div
             class="hero-cta-group"
-            style="display: flex; flex-wrap: wrap; gap: 14px"
+            style="display: flex; flex-direction: row; align-items: center; gap: 14px; flex-wrap: nowrap;"
           >
             <a
               href="https://github.com/primetech-live/Autoflow-Release/releases/download/v1.0.0/Autoflow-vNext_v1.0.0.exe"
               class="btn btn-primary js-download-btn"
-              style="display: flex; align-items: center; gap: 8px"
+              style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 46px; padding: 0 20px; white-space: nowrap;"
             >
               <svg
                 width="18"
@@ -107,36 +169,27 @@
                   d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"
                 />
               </svg>
-              <span class="js-download-label">DOWNLOAD DESKTOP APP</span>
+              <span class="js-download-label">DOWNLOAD APP</span>
             </a>
             <a
-              href="#cli"
-              class="btn btn-secondary"
-              style="display: flex; align-items: center; gap: 8px"
+              href="https://apps.microsoft.com/detail/9N9064GN25F1"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-ms-store"
+              title="Get AutoFlow from Microsoft Store"
+              style="height: 46px; padding: 0 16px; white-space: nowrap;"
             >
-              <span style="font-family: var(--f-mono); font-weight: 600"
-                >>_</span
-              >
-              GET THE CLI
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="2" y="2" width="9.5" height="9.5" fill="#f25022"/>
+                <rect x="12.5" y="2" width="9.5" height="9.5" fill="#7fba00"/>
+                <rect x="2" y="12.5" width="9.5" height="9.5" fill="#00a4ef"/>
+                <rect x="12.5" y="12.5" width="9.5" height="9.5" fill="#ffb900"/>
+              </svg>
+              <span class="ms-text-group">
+                <span class="ms-small-tag">GET IT FROM</span>
+                <span class="ms-main-title">Microsoft Store</span>
+              </span>
             </a>
-          </div>
-          <div
-            class="js-os-badge"
-            style="
-              margin-top: 14px;
-              font-size: 0.8125rem;
-              color: var(--c-slate);
-              font-family: var(--f-mono);
-            "
-          >
-            Auto-detected:
-            <strong style="color: var(--c-bone)">Windows (.exe)</strong> &bull;
-            Release v1.0.0 &bull;
-            <a
-              href="#install"
-              style="color: var(--c-primary); text-decoration: underline"
-              >Other platforms</a
-            >
           </div>
 
           <div
@@ -260,7 +313,7 @@
                     color: var(--c-bone);
                     letter-spacing: 0.05em;
                   "
-                  >ZERO-DOWNTIME</span
+                  >MINIMAL-DOWNTIME</span
                 >
               </div>
               <p
@@ -270,7 +323,7 @@
                   line-height: 1.4;
                 "
               >
-                Old container stays live until new one is healthy
+                Fast container cutover with brief rollout transition
               </p>
             </div>
           </div>
@@ -776,10 +829,9 @@ Commands:
               </svg>
             </div>
             <div>
-              <h3 style="margin-top: 0">Zero Downtime</h3>
+              <h3 style="margin-top: 0">Minimal Downtime</h3>
               <p class="text-slate" style="margin-bottom: 0">
-                Rolling updates and automatic traffic routing ensure your
-                application never drops a request.
+                Automated container swapping and rapid health checks ensure near-instant cutovers during updates.
               </p>
             </div>
           </div>
@@ -1892,6 +1944,24 @@ Commands:
                   class="btn btn-secondary js-download-linux"
                   >Linux (.deb)</a
                 >
+                <a
+                  href="https://apps.microsoft.com/detail/9N9064GN25F1"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn-ms-store"
+                  title="Install Autoflow-vNext via Microsoft Store"
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="2" y="2" width="9.5" height="9.5" fill="#f25022"/>
+                    <rect x="12.5" y="2" width="9.5" height="9.5" fill="#7fba00"/>
+                    <rect x="2" y="12.5" width="9.5" height="9.5" fill="#00a4ef"/>
+                    <rect x="12.5" y="12.5" width="9.5" height="9.5" fill="#ffb900"/>
+                  </svg>
+                  <span class="ms-text-group">
+                    <span class="ms-small-tag">GET IT FROM</span>
+                    <span class="ms-main-title">Microsoft Store</span>
+                  </span>
+                </a>
               </div>
             </div>
           </div>
@@ -1909,7 +1979,7 @@ Commands:
             <div>
               <h2 style="margin-bottom: 12px">Need more details?</h2>
               <p class="text-slate">
-                Explore the documentation, learn about zero-downtime routing, or
+                Explore the documentation, learn about automated container rollouts, or
                 check out the code.
               </p>
             </div>

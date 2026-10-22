@@ -1,4 +1,30 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // 0. Mobile Navigation Toggle & Drawer
+  const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+  const mobileNavDrawer = document.querySelector('.mobile-nav-drawer');
+  if (mobileNavToggle && mobileNavDrawer) {
+    mobileNavToggle.addEventListener('click', () => {
+      const isOpen = mobileNavDrawer.classList.toggle('open');
+      mobileNavToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+
+    // Close drawer when any nav link inside is clicked
+    mobileNavDrawer.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileNavDrawer.classList.remove('open');
+        mobileNavToggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    // Close drawer on resize > 768px
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 768 && mobileNavDrawer.classList.contains('open')) {
+        mobileNavDrawer.classList.remove('open');
+        mobileNavToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
   // 1. FAQ Accordion Logic (if present)
   const faqItems = document.querySelectorAll('.faq-item');
   if (faqItems.length > 0) {
@@ -232,8 +258,8 @@ document.addEventListener('DOMContentLoaded', () => {
   if (sloganTextEl) {
     const phrases = [
       'Deploy with Precision.',
-      'Deploy to your servers.',
-      'Zero cloud lock-in.'
+      'Deploy to your VPS.',
+      'Zero Cloud Lock-in.'
     ];
     let phraseIdx = 0;
     let charIdx = phrases[0].length;

@@ -287,8 +287,8 @@ a:hover {
 
 .hero-inner {
   display: grid;
-  grid-template-columns: 4fr 6fr;
-  gap: 64px;
+  grid-template-columns: minmax(0, 4.2fr) minmax(0, 5.8fr);
+  gap: 48px;
   align-items: center;
 }
 
@@ -1056,15 +1056,115 @@ a:hover {
   letter-spacing: 0.05em;
 }
 
+/* --- Mobile Menu Drawer & Hamburger Toggle --- */
+.mobile-nav-toggle {
+  display: none;
+  background: transparent;
+  border: 1px solid var(--c-hairline);
+  color: var(--c-bone);
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.mobile-nav-toggle:hover {
+  border-color: var(--c-primary);
+  color: var(--c-primary);
+}
+
+.mobile-nav-toggle svg {
+  display: block;
+}
+
+.mobile-nav-drawer {
+  display: none;
+  position: fixed;
+  top: 80px;
+  left: 0;
+  right: 0;
+  background: rgba(23, 24, 28, 0.98);
+  border-bottom: 1px solid var(--c-hairline);
+  padding: 24px;
+  backdrop-filter: blur(16px);
+  z-index: 99;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+}
+
+.mobile-nav-drawer.open {
+  display: flex;
+}
+
+.mobile-nav-drawer a {
+  font-family: var(--f-mono);
+  font-size: 0.95rem;
+  color: var(--c-bone);
+  text-transform: uppercase;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.mobile-nav-drawer a:last-child {
+  border-bottom: none;
+}
+
+/* Microsoft Store Brand Button */
+.btn-ms-store {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #1e2025;
+  color: var(--c-bone);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 12px 20px;
+  font-family: var(--f-mono);
+  font-size: 0.825rem;
+  font-weight: 600;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  transition: all 0.2s ease;
+}
+
+.btn-ms-store:hover {
+  background: #252830;
+  border-color: var(--c-signal);
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+}
+
+.btn-ms-store svg {
+  flex-shrink: 0;
+}
+
 /* --- Responsive Media Queries --- */
 @media (max-width: 1024px) {
   .hero-inner {
     grid-template-columns: 1fr;
     text-align: center;
+    gap: 48px;
   }
   
+  .hero-content {
+    align-items: center;
+  }
+
+  .hero-description {
+    max-width: 100%;
+  }
+
   .hero-cta-group {
     justify-content: center;
+  }
+
+  .hero-badges-row {
+    justify-content: center;
+    text-align: left;
   }
 
   .split-panel {
@@ -1079,10 +1179,6 @@ a:hover {
     grid-column: span 1;
   }
 
-  .pricing-grid {
-    grid-template-columns: 1fr;
-  }
-
   .cli-container {
     grid-template-columns: 1fr;
   }
@@ -1091,55 +1187,141 @@ a:hover {
     border-right: none;
     border-bottom: 1px solid var(--c-hairline);
   }
+
+  .two-surfaces {
+    margin-top: 32px;
+  }
+
+  .hero-terminal {
+    position: static !important;
+    width: 100% !important;
+    margin-top: 24px;
+    right: 0 !important;
+    bottom: 0 !important;
+    box-shadow: 0 16px 36px rgba(0,0,0,0.6) !important;
+  }
+
+  .mobile-surface {
+    position: static !important;
+    margin: 24px auto 0 !important;
+    width: 220px !important;
+  }
 }
 
 @media (max-width: 768px) {
-  h1 { font-size: 3rem; }
-  h2 { font-size: 2rem; }
+  h1 { font-size: 2.75rem !important; }
+  h2 { font-size: 1.85rem !important; }
   
-  .main-nav {
-    display: none; /* simple mobile hide for now */
+  .main-nav,
+  .header-actions {
+    display: none;
+  }
+
+  .mobile-nav-toggle {
+    display: flex;
+  }
+
+  .container {
+    max-width: 94%;
+    padding: 0 16px;
+  }
+
+  .hero {
+    padding: 30px 0 60px 0;
+    min-height: auto;
+  }
+
+  .hero-slogan {
+    font-size: 2.75rem !important;
+  }
+
+  .hero-cta-group {
+    flex-direction: column;
+    width: 100%;
+    gap: 12px;
+  }
+
+  .hero-cta-group .btn,
+  .hero-cta-group .btn-ms-store {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hero-badges-row {
+    grid-template-columns: 1fr;
+    gap: 16px;
   }
 
   .two-surfaces {
-    height: 800px;
+    height: auto !important;
+    padding-bottom: 0 !important;
   }
 
-  .desktop-surface, .cli-surface {
-    position: static;
-    width: 100%;
+  .desktop-surface,
+  .cli-surface {
+    position: static !important;
+    width: 100% !important;
     margin-bottom: 24px;
-  }
-  
-  .cta-band {
-    flex-direction: column;
-    text-align: center;
-    gap: 32px;
+    height: auto !important;
   }
 
-  .footer-spec-plate {
-    flex-direction: column;
-    gap: 48px;
+  .features-grid {
+    grid-template-columns: 1fr;
   }
-  
-  .footer-links {
-    flex-wrap: wrap;
-    gap: 32px;
+
+  .cta-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .cta-card {
+    padding: 28px !important;
+  }
+
+  .site-footer .container:first-child {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+  }
+
+  .site-footer .container:first-child > div:last-child {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .site-footer .container:last-child {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 20px;
+  }
+
+  .deploy-sequence-panel {
+    overflow-x: auto;
+  }
+
+  .sequence-track {
+    min-width: 680px;
+  }
+
+  pre {
+    font-size: 0.6rem !important;
   }
 }
 
 @media (max-width: 480px) {
-  .features-grid {
-    grid-template-columns: 1fr;
-  }
+  h1 { font-size: 2.25rem !important; }
+  h2 { font-size: 1.5rem !important; }
   
-  .hero-cta-group, .cta-actions {
-    flex-direction: column;
-    width: 100%;
+  .hero-slogan {
+    font-size: 2.25rem !important;
   }
 
-  .btn {
-    width: 100%;
+  .site-footer .container:first-child > div:last-child {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+
+  .hero-status-pill {
+    max-width: 100%;
+    font-size: 0.7rem;
+    padding: 4px 10px;
   }
 }
 
@@ -1152,7 +1334,6 @@ a:hover {
     scroll-behavior: auto !important;
   }
 }
-
 
 /* Floating Actions */
 .floating-actions {
@@ -1190,15 +1371,6 @@ a:hover {
   display: none;
 }
 
-
-.link-group a {
-  color: var(--c-slate);
-}
-
-.link-group a:hover {
-  color: var(--c-primary);
-}
-
 .footer-link {
   color: var(--c-slate);
   text-decoration: none;
@@ -1209,26 +1381,137 @@ a:hover {
   color: var(--c-primary);
 }
 
-/* Responsive Fixes for Two-Surfaces & Overlapping Mockups */
-@media (max-width: 992px) {
-  .hero-inner {
-    grid-template-columns: 1fr !important;
-    gap: 48px;
+/* --- Mobile Navigation Hamburger & Drawer --- */
+.mobile-nav-toggle {
+  display: none;
+  background: transparent;
+  border: 1px solid var(--c-hairline);
+  color: var(--c-bone);
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.mobile-nav-toggle:hover {
+  background-color: var(--c-panel);
+  border-color: var(--c-primary);
+}
+
+.mobile-nav-drawer {
+  display: none;
+  position: fixed;
+  top: var(--header-height, 70px);
+  left: 0;
+  width: 100%;
+  background: rgba(23, 24, 28, 0.98);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--c-hairline);
+  padding: 20px 24px 28px;
+  flex-direction: column;
+  gap: 16px;
+  z-index: 998;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+}
+
+.mobile-nav-drawer.open {
+  display: flex;
+}
+
+.mobile-nav-drawer a {
+  font-family: var(--f-mono);
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: var(--c-bone);
+  text-decoration: none;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  transition: color 0.2s, padding-left 0.2s;
+}
+
+.mobile-nav-drawer a:last-child {
+  border-bottom: none;
+}
+
+.mobile-nav-drawer a:hover,
+.mobile-nav-drawer a.active {
+  color: var(--c-primary);
+  padding-left: 6px;
+}
+
+.mobile-nav-drawer .drawer-cta {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* --- Microsoft Store Badge Button --- */
+.btn-ms-store {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #111215;
+  color: var(--c-bone);
+  border: 1px solid var(--c-hairline);
+  padding: 0 16px;
+  height: 46px;
+  border-radius: 4px;
+  font-family: var(--f-heading);
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  line-height: 1.2;
+  box-sizing: border-box;
+}
+
+.btn-ms-store:hover {
+  background: #1a1c22;
+  border-color: #0078d4;
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0, 120, 212, 0.25);
+}
+
+.btn-ms-store .ms-text-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.btn-ms-store .ms-small-tag {
+  font-family: var(--f-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.05em;
+  color: var(--c-slate);
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.btn-ms-store .ms-main-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--c-bone);
+  line-height: 1.2;
+}
+
+@media (max-width: 768px) {
+  .mobile-nav-toggle {
+    display: inline-flex;
   }
-  .two-surfaces {
-    margin-top: 32px;
-  }
-  .hero-terminal {
-    position: static !important;
-    width: 100% !important;
-    margin-top: 24px;
-    box-shadow: none !important;
-  }
-  .mobile-surface {
-    position: static !important;
-    margin: 24px auto 0 !important;
-    width: 220px !important;
+  .site-header .main-nav,
+  .site-header .header-actions {
+    display: none;
   }
 }
+
+
 
 
