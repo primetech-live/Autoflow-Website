@@ -2,8 +2,12 @@ document.addEventListener('DOMContentLoaded', () => {
   // 0. Mobile Navigation Toggle & Drawer
   const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
   const mobileNavDrawer = document.querySelector('.mobile-nav-drawer');
-  if (mobileNavToggle && mobileNavDrawer) {
-    mobileNavToggle.addEventListener('click', () => {
+  if (mobileNavToggle && mobileNavDrawer && !mobileNavToggle.dataset.navBound) {
+    mobileNavToggle.dataset.navBound = 'true';
+
+    mobileNavToggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
       const isOpen = mobileNavDrawer.classList.toggle('open');
       mobileNavToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
     });
@@ -19,6 +23,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // Close drawer on resize > 768px
     window.addEventListener('resize', () => {
       if (window.innerWidth > 768 && mobileNavDrawer.classList.contains('open')) {
+        mobileNavDrawer.classList.remove('open');
+        mobileNavToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // Close drawer when tapping outside
+    document.addEventListener('click', (e) => {
+      if (mobileNavDrawer.classList.contains('open') &&
+          !mobileNavDrawer.contains(e.target) &&
+          !mobileNavToggle.contains(e.target)) {
         mobileNavDrawer.classList.remove('open');
         mobileNavToggle.setAttribute('aria-expanded', 'false');
       }

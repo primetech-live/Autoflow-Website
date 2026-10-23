@@ -100,6 +100,43 @@
       gap: 12px;
       justify-content: center;
     }
+
+    @media (max-width: 768px) {
+      .error-wrapper {
+        padding: 48px 16px;
+      }
+      .error-card {
+        padding: 40px 24px;
+      }
+      .error-code {
+        font-size: 4rem;
+      }
+      .error-title {
+        font-size: 1.4rem;
+      }
+    }
+    @media (max-width: 480px) {
+      .error-card {
+        padding: 32px 16px;
+      }
+      .error-code {
+        font-size: 3.25rem;
+      }
+      .error-title {
+        font-size: 1.25rem;
+      }
+      .error-desc {
+        font-size: 0.875rem;
+        margin-bottom: 24px;
+      }
+      .error-nav-grid {
+        flex-direction: column;
+        width: 100%;
+      }
+      .error-nav-grid .btn {
+        width: 100%;
+      }
+    }
   </style>
 </head>
 <body>

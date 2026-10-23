@@ -208,7 +208,7 @@ a:hover {
 .site-header {
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 1000;
   background-color: rgba(23, 24, 28, 0.95);
   border-bottom: 1px solid var(--c-hairline);
   backdrop-filter: blur(8px);
@@ -1144,26 +1144,58 @@ a:hover {
 
 /* --- Responsive Media Queries --- */
 @media (max-width: 1024px) {
+  .hero {
+    min-height: auto !important;
+    padding: 45px 0 60px 0 !important;
+  }
+
   .hero-inner {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
     text-align: center;
-    gap: 48px;
+    gap: 40px !important;
   }
   
   .hero-content {
+    display: flex;
+    flex-direction: column;
     align-items: center;
+    text-align: center;
+    margin: 0 auto;
+    max-width: 720px;
+    width: 100% !important;
+  }
+
+  .hero-slogan {
+    font-size: clamp(2rem, 3.8vw, 2.75rem) !important;
+    white-space: normal !important;
+    min-height: 2.2em !important;
+    max-width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
   }
 
   .hero-description {
-    max-width: 100%;
+    max-width: 620px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-bottom: 28px !important;
   }
 
   .hero-cta-group {
-    justify-content: center;
+    justify-content: center !important;
+    gap: 14px !important;
   }
 
+  .hero-content > div:last-child,
   .hero-badges-row {
-    justify-content: center;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 20px !important;
+    margin-top: 36px !important;
+    padding-top: 24px !important;
+    max-width: 680px;
+    width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
     text-align: left;
   }
 
@@ -1189,15 +1221,26 @@ a:hover {
   }
 
   .two-surfaces {
-    margin-top: 32px;
+    margin-top: 24px !important;
+    max-width: 720px;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    width: 100% !important;
+  }
+
+  .two-surfaces .instrument-panel > div:last-child {
+    width: 100% !important;
+    margin-left: 0 !important;
   }
 
   .hero-terminal {
     position: static !important;
     width: 100% !important;
-    margin-top: 24px;
-    right: 0 !important;
-    bottom: 0 !important;
+    margin-top: 20px !important;
+    right: auto !important;
+    bottom: auto !important;
     box-shadow: 0 16px 36px rgba(0,0,0,0.6) !important;
   }
 
@@ -1205,6 +1248,50 @@ a:hover {
     position: static !important;
     margin: 24px auto 0 !important;
     width: 220px !important;
+  }
+
+  /* FAQ Tablet */
+  .faq-accordion {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .faq-item {
+    padding: 0 24px !important;
+    background-color: var(--c-panel);
+    border: 1px solid var(--c-hairline);
+    border-radius: 4px;
+  }
+
+  .faq-question {
+    padding: 22px 0 !important;
+    font-size: 1.05rem !important;
+    gap: 16px;
+  }
+
+  .faq-icon {
+    flex-shrink: 0;
+  }
+
+  .faq-item.open .faq-answer {
+    max-height: 500px !important;
+  }
+
+  .faq-answer p {
+    padding-bottom: 20px !important;
+    line-height: 1.6;
+  }
+
+  .site-footer .container:first-child {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+
+  .site-footer .container:first-child > div:last-child {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 24px !important;
   }
 }
 
@@ -1222,47 +1309,129 @@ a:hover {
   }
 
   .container {
-    max-width: 94%;
-    padding: 0 16px;
+    max-width: 100%;
+    width: 100%;
+    padding: 0 20px;
+    box-sizing: border-box;
   }
 
   .hero {
-    padding: 30px 0 60px 0;
-    min-height: auto;
+    padding: 30px 0 52px 0 !important;
+    min-height: auto !important;
+  }
+
+  .hero-inner {
+    grid-template-columns: 100% !important;
+    gap: 32px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin: 0 auto;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
   }
 
   .hero-slogan {
-    font-size: 2.75rem !important;
+    font-size: clamp(1.65rem, 5.2vw, 2.15rem) !important;
+    white-space: normal !important;
+    min-height: 2.3em !important;
+    margin-bottom: 16px !important;
+    text-align: center !important;
+  }
+
+  .hero-description {
+    font-size: 0.975rem !important;
+    line-height: 1.55 !important;
+    margin-bottom: 24px !important;
+    max-width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    text-align: center !important;
   }
 
   .hero-cta-group {
-    flex-direction: column;
-    width: 100%;
-    gap: 12px;
+    flex-direction: column !important;
+    flex-wrap: wrap !important;
+    width: 100% !important;
+    max-width: 320px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    gap: 12px !important;
   }
 
   .hero-cta-group .btn,
   .hero-cta-group .btn-ms-store {
-    width: 100%;
-    justify-content: center;
+    width: 100% !important;
+    justify-content: center !important;
+    height: 48px !important;
+    box-sizing: border-box !important;
   }
 
+  .hero-content > div:last-child,
   .hero-badges-row {
-    grid-template-columns: 1fr;
-    gap: 16px;
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+    margin-top: 28px !important;
+    padding-top: 20px !important;
+    width: 100% !important;
+    max-width: 320px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    box-sizing: border-box !important;
   }
 
   .two-surfaces {
+    position: relative !important;
     height: auto !important;
-    padding-bottom: 0 !important;
+    padding: 0 !important;
+    margin-top: 20px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
   }
 
-  .desktop-surface,
-  .cli-surface {
-    position: static !important;
+  .two-surfaces .surface {
     width: 100% !important;
-    margin-bottom: 24px;
-    height: auto !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .two-surfaces .surface > div:last-child {
+    width: 100% !important;
+    margin-left: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .hero-terminal {
+    position: relative !important;
+    right: auto !important;
+    bottom: auto !important;
+    left: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 16px auto 0 !important;
+    box-sizing: border-box !important;
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.7) !important;
+  }
+
+  .hero-terminal .panel-body {
+    padding: 12px 14px !important;
+    max-height: 240px !important;
+  }
+
+  .hero-terminal pre {
+    font-size: clamp(0.44rem, 1.8vw, 0.58rem) !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
   }
 
   .features-grid {
@@ -1275,6 +1444,41 @@ a:hover {
 
   .cta-card {
     padding: 28px !important;
+  }
+
+  /* FAQ Mobile */
+  .faq-accordion {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+
+  .faq-item {
+    padding: 0 18px !important;
+    background-color: var(--c-panel);
+    border: 1px solid var(--c-hairline);
+    border-radius: 4px;
+  }
+
+  .faq-question {
+    padding: 18px 0 !important;
+    font-size: 0.975rem !important;
+    line-height: 1.4 !important;
+    gap: 12px;
+  }
+
+  .faq-icon {
+    flex-shrink: 0;
+    font-size: 1.35rem;
+  }
+
+  .faq-item.open .faq-answer {
+    max-height: 500px !important;
+  }
+
+  .faq-answer p {
+    font-size: 0.9rem !important;
+    line-height: 1.55 !important;
+    padding-bottom: 18px !important;
   }
 
   .site-footer .container:first-child {
@@ -1292,12 +1496,108 @@ a:hover {
     gap: 20px;
   }
 
+  /* Vertical Deploy Sequence on Mobile */
   .deploy-sequence-panel {
-    overflow-x: auto;
+    overflow: hidden !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
   }
 
   .sequence-track {
-    min-width: 680px;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    min-width: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 36px 16px !important;
+    gap: 28px !important;
+    box-sizing: border-box !important;
+  }
+
+  .sequence-stage {
+    grid-column: auto !important;
+    grid-row: auto !important;
+    width: 100% !important;
+    max-width: 280px !important;
+    position: relative !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  .stage-box {
+    width: 100% !important;
+    max-width: 280px !important;
+    height: auto !important;
+    min-height: 54px !important;
+    padding: 10px 16px !important;
+    flex-direction: row !important;
+    justify-content: flex-start !important;
+    gap: 14px !important;
+    box-sizing: border-box !important;
+  }
+
+  .stage-icon {
+    flex-shrink: 0 !important;
+  }
+
+  .stage-name {
+    font-size: 0.8rem !important;
+    text-align: left !important;
+    letter-spacing: 0.05em !important;
+  }
+
+  .sequence-stage::before {
+    top: 100% !important;
+    bottom: auto !important;
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+    width: 2px !important;
+    height: 28px !important;
+  }
+
+  .sequence-stage:last-child::before,
+  .sequence-stage:nth-child(15)::before {
+    display: none !important;
+  }
+
+  .blue-line {
+    top: 100% !important;
+    bottom: auto !important;
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+    width: 2px !important;
+    height: 0 !important;
+    transition: height 0.8s linear !important;
+  }
+
+  .sequence-stage.done .blue-line {
+    height: 28px !important;
+    width: 2px !important;
+  }
+
+  .rocket-icon {
+    top: auto !important;
+    bottom: -16px !important;
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) rotate(135deg) !important;
+    width: 26px !important;
+    height: 26px !important;
+  }
+
+  .rocket-icon svg {
+    width: 22px !important;
+    height: 22px !important;
+  }
+
+  .sequence-stage:last-child .rocket-icon,
+  .sequence-stage:nth-child(15) .rocket-icon {
+    display: none !important;
   }
 
   pre {
@@ -1309,8 +1609,53 @@ a:hover {
   h1 { font-size: 2.25rem !important; }
   h2 { font-size: 1.5rem !important; }
   
+  .hero {
+    padding: 24px 0 40px 0 !important;
+  }
+
   .hero-slogan {
-    font-size: 2.25rem !important;
+    font-size: clamp(1.35rem, 6.2vw, 1.75rem) !important;
+    min-height: 2.4em !important;
+    margin-bottom: 14px !important;
+  }
+
+  .hero-description {
+    font-size: 0.925rem !important;
+    line-height: 1.5 !important;
+    margin-bottom: 20px !important;
+  }
+
+  .hero-cta-group {
+    max-width: 100% !important;
+  }
+
+  .hero-content > div:last-child,
+  .hero-badges-row {
+    max-width: 100% !important;
+    gap: 14px !important;
+    margin-top: 24px !important;
+    padding-top: 18px !important;
+  }
+
+  .hero-terminal pre {
+    font-size: clamp(0.38rem, 2.1vw, 0.5rem) !important;
+    line-height: 1.25 !important;
+  }
+
+  /* FAQ Small Mobile */
+  .faq-item {
+    padding: 0 14px !important;
+  }
+
+  .faq-question {
+    padding: 15px 0 !important;
+    font-size: 0.925rem !important;
+    gap: 10px;
+  }
+
+  .faq-answer p {
+    font-size: 0.85rem !important;
+    padding-bottom: 14px !important;
   }
 
   .site-footer .container:first-child > div:last-child {
@@ -1405,9 +1750,10 @@ a:hover {
 .mobile-nav-drawer {
   display: none;
   position: fixed;
-  top: var(--header-height, 70px);
+  top: 80px;
   left: 0;
   width: 100%;
+  right: 0;
   background: rgba(23, 24, 28, 0.98);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
@@ -1415,12 +1761,12 @@ a:hover {
   padding: 20px 24px 28px;
   flex-direction: column;
   gap: 16px;
-  z-index: 998;
+  z-index: 1001;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
 }
 
 .mobile-nav-drawer.open {
-  display: flex;
+  display: flex !important;
 }
 
 .mobile-nav-drawer a {

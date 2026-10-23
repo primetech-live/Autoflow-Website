@@ -85,6 +85,7 @@
       grid-template-columns: var(--sidebar-w) 1fr var(--toc-w);
       min-height: calc(100vh - var(--header-h));
       position: relative;
+      min-width: 0;
     }
 
     /* Left Sticky Navigation */
@@ -125,6 +126,7 @@
       margin: 0 auto;
       width: 100%;
       box-sizing: border-box;
+      min-width: 0;
     }
 
     /* Right Table of Contents */
@@ -329,6 +331,31 @@
       padding: 8px;
       box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
       margin: 28px 0;
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+    .screen-frame-cli {
+      position: relative;
+      overflow: hidden;
+    }
+    .cli-callout-badge {
+      position: absolute;
+      left: 34%;
+      bottom: 27%;
+      background: #ef4444;
+      color: #ffffff;
+      font-family: var(--f-mono);
+      font-size: 0.75rem;
+      padding: 6px 12px;
+      border-radius: 4px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      font-weight: 600;
+      pointer-events: none;
+      z-index: 10;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+      max-width: 90%;
     }
     .screen-img {
       width: 100%;
@@ -386,6 +413,10 @@
       margin: 24px 0;
       font-size: 0.85rem;
       border: 1px solid var(--c-hairline);
+      display: block;
+      max-width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
     }
     .docs-table th {
       background-color: var(--c-panel);
@@ -544,30 +575,137 @@
     /* Responsive adjustments */
     @media (max-width: 1024px) {
       .portal-layout {
-        grid-template-columns: var(--sidebar-w) 1fr;
+        grid-template-columns: 240px 1fr;
+        min-width: 0;
       }
       .portal-toc {
         display: none;
       }
+      .portal-sidebar {
+        width: 240px;
+        padding: 24px 16px 100px 16px;
+      }
+      .portal-content {
+        padding: 32px 28px 80px;
+        min-width: 0;
+      }
+      .cli-callout-badge {
+        font-size: 0.65rem;
+        padding: 4px 10px;
+        left: 30%;
+        bottom: 25%;
+      }
     }
+
     @media (max-width: 768px) {
       .portal-layout {
-        grid-template-columns: 1fr;
+        grid-template-columns: 100%;
+        min-width: 0;
       }
       .portal-sidebar {
         display: none;
         position: fixed;
+        top: var(--header-h, 80px);
         left: 0;
         bottom: 0;
-        width: var(--sidebar-w);
+        width: 280px;
+        max-width: 85vw;
         z-index: 999;
         background: #17181c;
+        border-right: 1px solid var(--c-hairline);
+        box-shadow: 4px 0 24px rgba(0, 0, 0, 0.7);
       }
       .portal-sidebar.active {
         display: block;
       }
       .mobile-sidebar-toggle {
         display: block;
+      }
+      .portal-content {
+        padding: 24px 16px 80px;
+        min-width: 0;
+        max-width: 100%;
+      }
+      .docs-section h1 {
+        font-size: clamp(1.75rem, 5vw, 2.25rem);
+      }
+      .docs-section h2 {
+        font-size: 1.35rem;
+        margin-top: 28px;
+      }
+      .docs-section h3 {
+        font-size: 1.05rem;
+      }
+      .nav-links {
+        flex-direction: column;
+        gap: 16px;
+      }
+      .nav-link.next {
+        align-items: flex-start;
+        text-align: left;
+      }
+      .screen-frame {
+        margin: 20px 0;
+        padding: 6px;
+      }
+      .cli-callout-badge {
+        font-size: clamp(0.48rem, 1.8vw, 0.6rem);
+        padding: 3px 7px;
+        border-radius: 3px;
+        left: 20%;
+        bottom: 23%;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      }
+      .two-surfaces {
+        padding-bottom: 30px !important;
+      }
+      .two-surfaces .instrument-panel {
+        width: 100% !important;
+      }
+      .two-surfaces .mobile-surface {
+        width: 130px !important;
+        border-width: 4px !important;
+        border-radius: 18px !important;
+      }
+      .two-surfaces .mobile-surface img {
+        border-radius: 14px !important;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .portal-content {
+        padding: 20px 12px 80px;
+      }
+      .docs-section h1 {
+        font-size: clamp(1.5rem, 6vw, 1.85rem);
+      }
+      .breadcrumbs {
+        font-size: 0.65rem;
+        flex-wrap: wrap;
+      }
+      .code-body {
+        padding: 10px 12px;
+      }
+      .code-body code {
+        font-size: 0.75rem;
+      }
+      .callout {
+        padding: 12px 14px;
+      }
+      .screen-frame {
+        padding: 4px;
+        margin: 16px 0;
+      }
+      .cli-callout-badge {
+        font-size: clamp(0.42rem, 1.7vw, 0.52rem);
+        padding: 2px 6px;
+        border-radius: 2px;
+        left: 14%;
+        bottom: 22%;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+      }
+      .docs-section ul, .docs-section ol {
+        padding-left: 18px;
       }
     }
   </style>
@@ -917,9 +1055,9 @@
             <li>Approve the system permissions dialog to bind the `autoflow` command symlink to your terminal path.</li>
           </ol>
 
-          <div class="screen-frame" style="position: relative;">
+          <div class="screen-frame screen-frame-cli">
             <img src="Assets/CLI/global_Terminal_integration.png" alt="AutoFlow CLI Settings Integration Page" class="screen-img">
-            <div style="position: absolute; left: 34%; bottom: 27%; background: #ef4444; color: #ffffff; font-family: var(--f-mono); font-size: 0.75rem; padding: 6px 12px; border-radius: 4px; box-shadow: 0 8px 24px rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.25); font-weight: 600; pointer-events: none; z-index: 10; letter-spacing: 0.02em;">
+            <div class="cli-callout-badge">
               Install Global CLI from here &rarr;
             </div>
           </div>
@@ -1745,8 +1883,6 @@
       </div>
     </div>
   </footer>
-
-  <script src="main.js"></script>
 
   <!-- SPA Documentation Tab Switching, Scrollspy, and Search Logic -->
   <script>

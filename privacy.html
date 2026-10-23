@@ -31,12 +31,79 @@
       border-bottom: 1px solid var(--c-hairline);
     }
     .page-content {
-      padding: 80px 0;
+      padding: 80px 24px;
       max-width: 800px;
       margin: 0 auto;
+      box-sizing: border-box;
     }
     .page-content h2 { margin-top: 48px; margin-bottom: 24px; }
     .page-content p { color: var(--c-slate); line-height: 1.7; margin-bottom: 24px; }
+
+    @media (max-width: 768px) {
+      .page-header {
+        padding: 48px 16px 32px;
+      }
+      .page-header h1 {
+        font-size: clamp(1.85rem, 6vw, 2.5rem) !important;
+      }
+      .page-content {
+        padding: 40px 20px;
+      }
+      .page-content h2 {
+        margin-top: 32px;
+        margin-bottom: 16px;
+        font-size: 1.35rem;
+      }
+      .page-content p {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        word-break: break-word;
+      }
+      .site-footer {
+        padding: 40px 0 24px 0 !important;
+      }
+      .site-footer .container:first-child {
+        grid-template-columns: 1fr !important;
+        gap: 36px !important;
+      }
+      .site-footer .container:first-child > div:last-child {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 20px !important;
+      }
+      .site-footer .container:last-child {
+        margin-top: 36px !important;
+        padding-top: 24px !important;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .page-header {
+        padding: 36px 12px 24px;
+      }
+      .page-header h1 {
+        font-size: clamp(1.6rem, 6vw, 2rem) !important;
+      }
+      .page-content {
+        padding: 28px 16px;
+      }
+      .page-content h2 {
+        font-size: 1.2rem;
+        margin-top: 24px;
+        margin-bottom: 12px;
+      }
+      .page-content p {
+        font-size: 0.9rem;
+      }
+      .site-footer .container:first-child > div:last-child {
+        grid-template-columns: 1fr !important;
+        gap: 24px !important;
+      }
+      .site-footer .container:last-child {
+        flex-direction: column !important;
+        gap: 16px !important;
+        align-items: flex-start !important;
+      }
+    }
   </style>
 
   <link rel="icon" type="image/png" href="Assets/icon-1.png">
